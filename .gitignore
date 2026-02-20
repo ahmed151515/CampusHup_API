@@ -1,0 +1,68 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Coverage / Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+
+
+# Static files (إذا تستخدم collectstatic)
+staticfiles/
+
+# MyPy
+.mypy_cache/
+
+# Pyre
+.pyre/
+
+# Ruff
+.ruff_cache/
