@@ -1,8 +1,9 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "",
-        "version": "0.0.0"
+        "title": "Campus Hub API",
+        "version": "1.0.0",
+        "description": "Campus Hub Backend API"
     },
     "paths": {
         "/api/schema/": {
@@ -138,6 +139,9 @@
                     {
                         "jwtAuth": []
                     },
+                    {
+                        "BearerAuth": []
+                    },
                     {}
                 ],
                 "responses": {
@@ -182,6 +186,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -228,6 +235,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -264,6 +274,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -318,6 +331,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -371,6 +387,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -405,11 +424,44 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
                     "204": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/v1/accounts/me/": {
+            "get": {
+                "operationId": "api_v1_accounts_me_retrieve",
+                "description": "Returns the profile information of the currently authenticated user.",
+                "summary": "Get current user's profile",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -423,6 +475,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -469,6 +524,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -505,6 +563,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -559,6 +620,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -612,6 +676,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -646,6 +713,9 @@
                 "security": [
                     {
                         "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
                     }
                 ],
                 "responses": {
@@ -682,6 +752,11 @@
                     },
                     "required": true
                 },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "content": {
@@ -723,6 +798,11 @@
                     },
                     "required": true
                 },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "content": {
@@ -764,6 +844,11 @@
                     },
                     "required": true
                 },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "content": {
@@ -807,18 +892,12 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
-                    "date_joined": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
                     "faculty_profile": {
                         "$ref": "#/components/schemas/FacultyProfile"
                     }
                 },
                 "required": [
                     "college_id",
-                    "date_joined",
                     "email",
                     "faculty_profile",
                     "first_name",
@@ -832,15 +911,10 @@
                     "department": {
                         "type": "string",
                         "maxLength": 100
-                    },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 100
                     }
                 },
                 "required": [
-                    "department",
-                    "name"
+                    "department"
                 ]
             },
             "PatchedFaculty": {
@@ -868,11 +942,6 @@
                         "format": "email",
                         "title": "Email address",
                         "maxLength": 254
-                    },
-                    "date_joined": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
                     },
                     "faculty_profile": {
                         "$ref": "#/components/schemas/FacultyProfile"
@@ -905,11 +974,6 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
-                    "date_joined": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
                     "student_profile": {
                         "$ref": "#/components/schemas/StudentProfile"
                     }
@@ -941,18 +1005,12 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
-                    "date_joined": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
                     "student_profile": {
                         "$ref": "#/components/schemas/StudentProfile"
                     }
                 },
                 "required": [
                     "college_id",
-                    "date_joined",
                     "email",
                     "first_name",
                     "id",
@@ -967,6 +1025,13 @@
                         "type": "string",
                         "maxLength": 100
                     },
+                    "join_date_year": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "description": "The calendar year the student enrolled, e.g. 2023"
+                    },
                     "gpa": {
                         "type": "string",
                         "format": "decimal",
@@ -977,7 +1042,8 @@
                 },
                 "required": [
                     "department",
-                    "gpa"
+                    "gpa",
+                    "join_date_year"
                 ]
             },
             "TokenBlacklist": {
@@ -1034,6 +1100,16 @@
                     "access",
                     "refresh"
                 ]
+            },
+            "UserProfile": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/Student"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Faculty"
+                    }
+                ]
             }
         },
         "securitySchemes": {
@@ -1043,5 +1119,11 @@
                 "bearerFormat": "JWT"
             }
         }
-    }
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Development"
+        }
+    ]
 }
