@@ -6,25 +6,26 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentProfile
         fields = ["department", "join_date_year", "gpa"]
+        read_only_fields = ["gpa"]
         extra_kwargs = {
             "department": {"required": True},
             "join_date_year": {"required": True},
-            "gpa": {"read_only": True, "write_only": True},
         }
 
 
 class FacultyProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = FacultyProfile
-        fields = ["department", "name"]
+        fields = [
+            "department",
+        ]
         extra_kwargs = {
             "department": {"required": True},
-            "name": {"required": True},
         }
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    student_profile = StudentProfileSerializer(source="student_profile")
+    student_profile = StudentProfileSerializer()
 
     class Meta:
         model = User
@@ -34,11 +35,10 @@ class StudentSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "role",
-            "date_joined",
+            # "date_joined",
             "student_profile",
         ]
-        read_only_fields = ["id", "role", "date_joined"]
+        read_only_fields = ["id"]
         extra_kwargs = {
             "college_id": {"required": True},
             "first_name": {"required": True},
@@ -65,7 +65,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class FacultySerializer(serializers.ModelSerializer):
-    faculty_profile = FacultyProfileSerializer(source="faculty_profile")
+    faculty_profile = FacultyProfileSerializer()
 
     class Meta:
         model = User
@@ -75,11 +75,10 @@ class FacultySerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "role",
-            "date_joined",
+            # "date_joined",
             "faculty_profile",
         ]
-        read_only_fields = ["id", "role", "date_joined"]
+        read_only_fields = ["id"]
         extra_kwargs = {
             "college_id": {"required": True},
             "first_name": {"required": True},

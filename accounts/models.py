@@ -62,6 +62,7 @@ class StudentProfile(models.Model):
         max_digits=4,
         decimal_places=2,
         help_text="GPA on a 4.0 scale",
+        default=0.00,
     )
 
     def __str__(self):
@@ -78,7 +79,6 @@ class FacultyProfile(models.Model):
         limit_choices_to={"role": "faculty"},
     )
     department = models.CharField(max_length=100, blank=True)
-    name = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f"FacultyProfile({self.user.college_id})"

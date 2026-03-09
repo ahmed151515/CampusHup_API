@@ -28,10 +28,10 @@ class StudentProfileAdmin(admin.ModelAdmin):
 # ── Faculty Profile ──────────────────────────────────────────
 @admin.register(FacultyProfile)
 class FacultyProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "name", "department"]
+    list_display = ["user", "department"]
     list_filter = ["department"]
-    search_fields = ["user__college_id", "user__email", "name", "department"]
+    search_fields = ["user__college_id", "user__email", "department"]
     fieldsets = (
         (None, {"fields": ("user",)}),
-        ("Faculty Info", {"fields": ("name", "department")}),
+        ("Faculty Info", {"fields": ["department"]}),
     )

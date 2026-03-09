@@ -2,14 +2,14 @@ from __future__ import annotations
 from django.contrib.auth.base_user import BaseUserManager
 
 
-# fields that belong to User model
-USER_FIELDS = {"college_id", "first_name", "last_name", "email"}
+# # fields that belong to User model
+# USER_FIELDS = {"college_id", "first_name", "last_name", "email"}
 
-# fields that belong to StudentProfile
-STUDENT_FIELDS = {"department", "join_date_year", "gpa"}
+# # fields that belong to StudentProfile
+# STUDENT_FIELDS = {"department", "join_date_year", "gpa"}
 
-# fields that belong to FacultyProfile
-FACULTY_FIELDS = {"department", "name"}
+# # fields that belong to FacultyProfile
+# FACULTY_FIELDS = {"department", "name"}
 
 
 class UserManager(BaseUserManager):
@@ -22,23 +22,25 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_student(self, data: dict):
+    def create_student(self, data: dict) -> User:  # noqa: F821
         from .models import StudentProfile
 
-        # split data into user fields and profile fields
-        user_data = {k: v for k, v in data.items() if k in USER_FIELDS}
-        profile_data = {k: v for k, v in data.items() if k in STUDENT_FIELDS}
-
+        profile_data = data.pop(
+            "student_profile",
+        )
+        user_data = data
         user = self.create_user(role="student", **user_data)
 
         StudentProfile.objects.create(user=user, **profile_data)
         return user
 
-    def create_faculty(self, data: dict):
+    def create_faculty(self, data: dict) -> User:  # noqa: F821
         from .models import FacultyProfile
 
-        user_data = {k: v for k, v in data.items() if k in USER_FIELDS}
-        profile_data = {k: v for k, v in data.items() if k in FACULTY_FIELDS}
+        profile_data = data.pop(
+            "faculty_profile",
+        )
+        user_data = data
 
         user = self.create_user(role="faculty", **user_data)
 
