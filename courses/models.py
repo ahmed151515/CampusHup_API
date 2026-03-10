@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from accounts.models import FacultyProfile, StudentProfile
+from accounts.models import FacultyProfile, StudentProfile, User
 
 class Course(models.Model):
     created_by = models.ForeignKey(
@@ -46,7 +46,7 @@ class Enrollment(models.Model):
         ('dropped', 'Dropped'),
         ('completed', 'Completed'),
     ]
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='enrollments')
+    student = models.ForeignKey(User, limit_choices_to={"role": "student"}, on_delete=models.CASCADE, related_name='enrollments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
     grade = models.CharField(max_length=5, null=True, blank=True)
