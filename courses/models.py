@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from accounts.models import FacultyProfile, StudentProfile, User
+from accounts.models import FacultyProfile, User
 
 class Course(models.Model):
     created_by = models.ForeignKey(
