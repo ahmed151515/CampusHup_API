@@ -5,12 +5,15 @@ from ..models import Course
 from ..serializers import CourseSerializer
 
 
-class CourseViewSet(viewsets.ReadOnlyModelViewSet):
+class CourseViewSet(viewsets.ModelViewSet):
     """
-    List and retrieve courses.
+    CRUD operations for courses.
 
     * GET /api/v1/courses/         → list all active courses
+    * POST /api/v1/courses/        → create a new course
     * GET /api/v1/courses/{id}/    → retrieve a single course
+    * PUT/PATCH /api/v1/courses/{id}/ → update a course
+    * DELETE /api/v1/courses/{id}/ → delete a course
     """
 
     serializer_class = CourseSerializer
@@ -18,4 +21,7 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "course_code"
 
     def get_queryset(self):
-        return Course.objects.filter(is_active=True).order_by("course_code")
+        return Course.objects.all().order_by("course_code")
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
