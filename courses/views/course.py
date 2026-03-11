@@ -15,6 +15,7 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
 
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
+    lookup_field = "course_code"
 
     def get_queryset(self):
         return Course.objects.filter(is_active=True).order_by("course_code")
