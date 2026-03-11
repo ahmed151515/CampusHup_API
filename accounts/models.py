@@ -82,3 +82,40 @@ class FacultyProfile(models.Model):
 
     def __str__(self):
         return f"FacultyProfile({self.user.college_id})"
+
+
+class Student(User):
+    class Meta:
+        proxy = True
+        verbose_name = "Student"
+        verbose_name_plural = "Students"
+
+    
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(role="student")
+
+
+class Faculty(User):
+    class Meta:
+        proxy = True
+        verbose_name = "Faculty"
+        verbose_name_plural = "Faculty"
+
+    def save(self, *args, **kwargs):
+        self.role = "faculty"
+        self.set_password(self.college_id)
+        super().save(*args, **kwargs)
+
+
+class Admin(User):
+    class Meta:
+        proxy = True
+        verbose_name = "Admin"
+        verbose_name_plural = "Admins"
+
+    def save(self, *args, **kwargs):
+        self.role = "admin"
+        self.set_password(self.college_id)
+        self.is_staff = True
+        super().save(*args, **kwargs)
