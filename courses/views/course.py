@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
+from accounts.permissions import IsAdminOrReadOnly
 from ..models import Course
 from ..serializers import CourseSerializer
 
@@ -17,7 +18,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     """
 
     serializer_class = CourseSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     lookup_field = "course_code"
 
     def get_queryset(self):
