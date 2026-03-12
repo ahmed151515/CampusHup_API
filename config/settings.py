@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from datetime import timedelta
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -163,3 +164,7 @@ SPECTACULAR_SETTINGS = {
         }
     },
 }
+if "test" in sys.argv:
+    PASSWORD_HASHERS = [
+        "django.contrib.auth.hashers.MD5PasswordHasher",
+    ]
