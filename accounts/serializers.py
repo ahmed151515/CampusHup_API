@@ -24,9 +24,7 @@ class FacultyProfileSerializer(serializers.ModelSerializer):
         }
 
 
-class StudentSerializer(serializers.ModelSerializer):
-    student_profile = StudentProfileSerializer()
-
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
@@ -36,7 +34,6 @@ class StudentSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             # "date_joined",
-            "student_profile",
         ]
         read_only_fields = ["id"]
         extra_kwargs = {
@@ -47,12 +44,29 @@ class StudentSerializer(serializers.ModelSerializer):
         }
 
     def update(self, instance, validated_data):
-        profile_data = validated_data.pop("student_profile", None)
 
         # update user fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
+
+        # update profile fields
+
+        return instance
+
+
+class StudentSerializer(UserSerializer):
+    student_profile = StudentProfileSerializer()
+
+    class Meta(UserSerializer.Meta):
+        model = User
+        fields = UserSerializer.Meta.fields + ["student_profile"]
+
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop("student_profile", None)
+
+        # update user fields
+        instance = super().update(instance, validated_data)
 
         # update profile fields
         if profile_data:
@@ -64,20 +78,12 @@ class StudentSerializer(serializers.ModelSerializer):
         return instance
 
 
-class FacultySerializer(serializers.ModelSerializer):
+class FacultySerializer(UserSerializer):
     faculty_profile = FacultyProfileSerializer()
 
-    class Meta:
+    class Meta(UserSerializer.Meta):
         model = User
-        fields = [
-            "id",
-            "college_id",
-            "first_name",
-            "last_name",
-            "email",
-            # "date_joined",
-            "faculty_profile",
-        ]
+        fields = UserSerializer.Meta.fields + ["faculty_profile"]
         read_only_fields = ["id"]
         extra_kwargs = {
             "college_id": {"required": True},
@@ -89,9 +95,7 @@ class FacultySerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         profile_data = validated_data.pop("faculty_profile", None)
 
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
+        instance = super().update(instance, validated_data)
 
         if profile_data:
             profile = instance.faculty_profile
