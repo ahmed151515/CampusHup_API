@@ -54,7 +54,7 @@ class StudentProfile(models.Model):
         limit_choices_to={"role": "student"},
     )
 
-    department = models.CharField(max_length=100, blank=True)
+    department = models.ForeignKey("courses.Department", on_delete=models.CASCADE, related_name='StudentProfile')
     join_date_year = models.PositiveSmallIntegerField(
         help_text="The calendar year the student enrolled, e.g. 2023",
     )

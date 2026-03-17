@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import FacultyProfile, User
 class Department(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -24,7 +25,7 @@ class Course(models.Model):
     description = models.TextField(blank=True)
     credit_hours = models.PositiveIntegerField()
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='courses')
-    semester = models.CharField(max_length=50)
+    semester = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(14)])
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

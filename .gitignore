@@ -3,6 +3,7 @@ venv/
 env/
 .venv/
 
+
 # Python
 __pycache__/
 *.py[cod]
@@ -66,3 +67,6 @@ staticfiles/
 
 # Ruff
 .ruff_cache/
+
+# Migrations
+migrations/
