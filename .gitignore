@@ -70,3 +70,9 @@ staticfiles/
 
 # Migrations
 migrations/
+
+pyrightconfig.json
+mypy.ini
+
+*/migrations/
+
