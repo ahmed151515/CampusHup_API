@@ -18,6 +18,7 @@ class User(AbstractUser):
         unique=True,
         verbose_name="College ID",
         help_text="Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
+        primary_key=True,
     )
     role = models.CharField(
         max_length=20,
@@ -54,7 +55,9 @@ class StudentProfile(models.Model):
         limit_choices_to={"role": "student"},
     )
 
-    department = models.ForeignKey("courses.Department", on_delete=models.CASCADE, related_name='StudentProfile')
+    department = models.ForeignKey(
+        "courses.Department", on_delete=models.CASCADE, related_name="StudentProfile"
+    )
     join_date_year = models.PositiveSmallIntegerField(
         help_text="The calendar year the student enrolled, e.g. 2023",
     )
@@ -89,8 +92,6 @@ class Student(User):
         proxy = True
         verbose_name = "Student"
         verbose_name_plural = "Students"
-
-    
 
     def get_queryset(self, request):
         return super().get_queryset(request).filter(role="student")
