@@ -177,6 +177,271 @@
                 }
             }
         },
+        "/api/v1/accounts/departments/": {
+            "get": {
+                "operationId": "api_v1_accounts_departments_list",
+                "description": "CRUD for Departments.",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Department"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_v1_accounts_departments_create",
+                "description": "CRUD for Departments.",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Department"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/accounts/departments/{code}/": {
+            "get": {
+                "operationId": "api_v1_accounts_departments_retrieve",
+                "description": "CRUD for Departments.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this department.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Department"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "api_v1_accounts_departments_update",
+                "description": "CRUD for Departments.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this department.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Department"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Department"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "api_v1_accounts_departments_partial_update",
+                "description": "CRUD for Departments.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this department.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDepartment"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDepartment"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDepartment"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Department"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "api_v1_accounts_departments_destroy",
+                "description": "CRUD for Departments.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this department.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/v1/accounts/faculty/": {
             "get": {
                 "operationId": "api_v1_accounts_faculty_list",
@@ -472,7 +737,7 @@
         "/api/v1/accounts/me/": {
             "get": {
                 "operationId": "api_v1_accounts_me_retrieve",
-                "description": "Returns the profile of the currently authenticated user.\n\nThe response shape depends on the caller's role:\n- **student** → `StudentSerializer` (includes `student_profile`)\n- **faculty** → `FacultySerializer` (includes `faculty_profile`)\n\nOther roles (e.g. admin) are not yet implemented and will raise a server error.",
+                "description": "Returns the profile of the currently authenticated user.\n\nThe response shape depends on the caller's role:\n- **student** → `StudentSerializer` (includes `student_profile`)\n- **faculty** → `FacultySerializer` (includes `faculty_profile`)\n\nOther roles (e.g. admin) `UserSerializer`.",
                 "summary": "Get current user's profile",
                 "tags": [
                     "Me"
@@ -931,17 +1196,357 @@
                     }
                 }
             }
+        },
+        "/api/v1/courses/": {
+            "get": {
+                "operationId": "api_v1_courses_list",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Course"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_v1_courses_create",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/courses/{course_code}/": {
+            "get": {
+                "operationId": "api_v1_courses_retrieve",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "course_code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this course.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "api_v1_courses_update",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "course_code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this course.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "api_v1_courses_partial_update",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "course_code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this course.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedCourse"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedCourse"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedCourse"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "api_v1_courses_destroy",
+                "description": "CRUD operations for courses.\n\n* GET /api/v1/courses/         → list all active courses\n* POST /api/v1/courses/        → create a new course\n* GET /api/v1/courses/{id}/    → retrieve a single course\n* PUT/PATCH /api/v1/courses/{id}/ → update a course\n* DELETE /api/v1/courses/{id}/ → delete a course",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "course_code",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A unique value identifying this course.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Course": {
+                "type": "object",
+                "properties": {
+                    "course_code": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "course_name": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "credit_hours": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
+                    },
+                    "department": {
+                        "type": "string"
+                    },
+                    "semester": {
+                        "type": "integer",
+                        "maximum": 14,
+                        "minimum": 1
+                    },
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
+                        "readOnly": true,
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "course_code",
+                    "course_name",
+                    "created_at",
+                    "created_by",
+                    "credit_hours",
+                    "department",
+                    "semester",
+                    "updated_at"
+                ]
+            },
+            "Department": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "code": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "code",
+                    "name"
+                ]
+            },
             "Faculty": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
                     "college_id": {
                         "type": "string",
                         "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
@@ -961,38 +1566,86 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
-                    "faculty_profile": {
-                        "$ref": "#/components/schemas/FacultyProfile"
+                    "department": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "college_id",
+                    "department",
                     "email",
-                    "faculty_profile",
                     "first_name",
-                    "id",
                     "last_name"
                 ]
             },
-            "FacultyProfile": {
+            "PatchedCourse": {
                 "type": "object",
                 "properties": {
+                    "course_code": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "course_name": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "credit_hours": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
+                    },
                     "department": {
+                        "type": "string"
+                    },
+                    "semester": {
+                        "type": "integer",
+                        "maximum": 14,
+                        "minimum": 1
+                    },
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
+                        "readOnly": true,
+                        "nullable": true
+                    }
+                }
+            },
+            "PatchedDepartment": {
+                "type": "object",
+                "properties": {
+                    "name": {
                         "type": "string",
                         "maxLength": 100
+                    },
+                    "code": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "description": {
+                        "type": "string"
                     }
-                },
-                "required": [
-                    "department"
-                ]
+                }
             },
             "PatchedFaculty": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
                     "college_id": {
                         "type": "string",
                         "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
@@ -1012,18 +1665,14 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
-                    "faculty_profile": {
-                        "$ref": "#/components/schemas/FacultyProfile"
+                    "department": {
+                        "type": "string"
                     }
                 }
             },
             "PatchedStudent": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
                     "college_id": {
                         "type": "string",
                         "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
@@ -1042,6 +1691,9 @@
                         "format": "email",
                         "title": "Email address",
                         "maxLength": 254
+                    },
+                    "department": {
+                        "type": "string"
                     },
                     "student_profile": {
                         "$ref": "#/components/schemas/StudentProfile"
@@ -1051,10 +1703,6 @@
             "Student": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
                     "college_id": {
                         "type": "string",
                         "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
@@ -1074,15 +1722,18 @@
                         "title": "Email address",
                         "maxLength": 254
                     },
+                    "department": {
+                        "type": "string"
+                    },
                     "student_profile": {
                         "$ref": "#/components/schemas/StudentProfile"
                     }
                 },
                 "required": [
                     "college_id",
+                    "department",
                     "email",
                     "first_name",
-                    "id",
                     "last_name",
                     "student_profile"
                 ]
@@ -1090,10 +1741,6 @@
             "StudentProfile": {
                 "type": "object",
                 "properties": {
-                    "department": {
-                        "type": "string",
-                        "maxLength": 100
-                    },
                     "join_date_year": {
                         "type": "integer",
                         "maximum": 9223372036854775807,
@@ -1110,7 +1757,6 @@
                     }
                 },
                 "required": [
-                    "department",
                     "gpa",
                     "join_date_year"
                 ]
@@ -1170,6 +1816,40 @@
                     "refresh"
                 ]
             },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "college_id": {
+                        "type": "string",
+                        "description": "Student: 202603001 | Faculty: DR001 | Admin: ADMIN01",
+                        "maxLength": 30
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email address",
+                        "maxLength": 254
+                    },
+                    "department": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "college_id",
+                    "department",
+                    "email",
+                    "first_name",
+                    "last_name"
+                ]
+            },
             "UserProfile": {
                 "oneOf": [
                     {
@@ -1177,6 +1857,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/Faculty"
+                    },
+                    {
+                        "$ref": "#/components/schemas/User"
                     }
                 ]
             }

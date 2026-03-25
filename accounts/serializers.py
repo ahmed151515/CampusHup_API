@@ -1,14 +1,19 @@
 from rest_framework import serializers
-from .models import User, StudentProfile, FacultyProfile
+from .models import User, StudentProfile, FacultyProfile, Department
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = ["name", "code", "description"]
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentProfile
-        fields = ["department", "join_date_year", "gpa"]
+        fields = ["join_date_year", "gpa"]
         read_only_fields = ["gpa"]
         extra_kwargs = {
-            "department": {"required": True},
             "join_date_year": {"required": True},
         }
 
@@ -16,26 +21,26 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 class FacultyProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = FacultyProfile
-        fields = [
-            "department",
-        ]
-        extra_kwargs = {
-            "department": {"required": True},
-        }
+        fields = ""
 
 
 class UserSerializer(serializers.ModelSerializer):
+    department = serializers.PrimaryKeyRelatedField(
+        queryset=Department.objects.all(),
+        required=True,
+    )
+
     class Meta:
         model = User
         fields = [
-            "id",
             "college_id",
             "first_name",
             "last_name",
             "email",
+            "department",
             # "date_joined",
         ]
-        read_only_fields = ["id"]
+
         extra_kwargs = {
             "college_id": {"required": True},
             "first_name": {"required": True},

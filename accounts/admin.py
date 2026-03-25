@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import StudentProfile, FacultyProfile, Student, Faculty, Admin
+from .models import StudentProfile, FacultyProfile, Student, Faculty, Admin, Department
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ("name", "code")
+    search_fields = ("name", "code")
+    ordering = ("name",)
 
 
 class StudentProfileInline(admin.StackedInline):

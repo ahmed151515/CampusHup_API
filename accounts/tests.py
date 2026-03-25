@@ -28,7 +28,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from accounts.models import User
+from accounts.models import Department, User
 
 
 # ---------------------------------------------------------------------------
@@ -60,8 +60,21 @@ def get_list_data(response) -> list:
     return data  # plain list (no pagination)
 
 
+def make_department(
+    code: str = "CS", name: str = "Computer Science"
+) -> Department:
+    """Return a Department, creating it if it does not already exist."""
+    dept, _ = Department.objects.get_or_create(code=code, defaults={"name": name})
+    return dept
+
+
 def make_admin(college_id: str = "ADMIN01") -> User:
-    """Create and return an admin user."""
+    """Create and return an admin user.
+
+    The manager hard-codes ``department_id='05'``, so we ensure that
+    Department exists before creating the admin.
+    """
+    make_department(code="05", name="Administration")
     return User.objects.create_admin(
         {
             "college_id": college_id,
@@ -74,14 +87,15 @@ def make_admin(college_id: str = "ADMIN01") -> User:
 
 def make_student(college_id: str = "202601001") -> User:
     """Create a student user with a matching StudentProfile."""
+    dept = make_department()
     return User.objects.create_student(
         {
             "college_id": college_id,
             "first_name": "John",
             "last_name": "Doe",
             "email": f"{college_id}@student.test.com",
+            "department_id": dept.code,
             "student_profile": {
-                "department": "CS",
                 "join_date_year": 2024,
             },
         }
@@ -90,15 +104,15 @@ def make_student(college_id: str = "202601001") -> User:
 
 def make_faculty(college_id: str = "DR001") -> User:
     """Create a faculty user with a matching FacultyProfile."""
+    dept = make_department()
     return User.objects.create_faculty(
         {
             "college_id": college_id,
             "first_name": "Jane",
             "last_name": "Smith",
             "email": f"{college_id.lower()}@faculty.test.com",
-            "faculty_profile": {
-                "department": "CS",
-            },
+            "department_id": dept.code,
+            "faculty_profile": {},
         }
     )
 
@@ -113,21 +127,27 @@ class StudentListCreateTests(APITestCase):
 
     list_url = reverse("v1:student-list")
 
+    # department is set in setUp so the FK exists before any request
     VALID_PAYLOAD = {
         "college_id": "202699001",
         "first_name": "Alice",
         "last_name": "Wonder",
         "email": "alice@student.test.com",
         "student_profile": {
-            "department": "Math",
             "join_date_year": 2025,
         },
     }
 
     def setUp(self):
+        self.dept = make_department()
         self.admin = make_admin()
         self.student = make_student()
         self.faculty = make_faculty()
+        # Inject the real department PK so the view can resolve the FK
+        self.VALID_PAYLOAD = {
+            **self.__class__.VALID_PAYLOAD,
+            "department": self.dept.code,
+        }
 
     # ---- list ----
 
@@ -181,7 +201,6 @@ class StudentListCreateTests(APITestCase):
         )
         user = User.objects.get(college_id=self.VALID_PAYLOAD["college_id"])
         self.assertTrue(hasattr(user, "student_profile"))
-        self.assertEqual(user.student_profile.department, "Math")
 
     def test_create_student_sets_role_to_student(self):
         self.client.post(
@@ -223,6 +242,7 @@ class StudentDetailTests(APITestCase):
     """Tests for GET/PUT/PATCH/DELETE /api/v1/accounts/students/{college_id}/"""
 
     def setUp(self):
+        self.dept = make_department()
         self.admin = make_admin()
         self.student = make_student()
         self.faculty = make_faculty()
@@ -268,8 +288,8 @@ class StudentDetailTests(APITestCase):
             "first_name": "Updated",
             "last_name": "Name",
             "email": "updated@student.test.com",
+            "department": self.dept.code,
             "student_profile": {
-                "department": "Physics",
                 "join_date_year": 2023,
             },
         }
@@ -284,8 +304,8 @@ class StudentDetailTests(APITestCase):
             "first_name": "Changed",
             "last_name": "Last",
             "email": "changed@student.test.com",
+            "department": self.dept.code,
             "student_profile": {
-                "department": "Biology",
                 "join_date_year": 2022,
             },
         }
@@ -294,7 +314,6 @@ class StudentDetailTests(APITestCase):
         )
         self.student.refresh_from_db()
         self.assertEqual(self.student.first_name, "Changed")
-        self.assertEqual(self.student.student_profile.department, "Biology")
 
     def test_full_update_student_unauthenticated_returns_401(self):
         response = self.client.put(self.detail_url, {}, format="json")
@@ -319,16 +338,17 @@ class StudentDetailTests(APITestCase):
         self.student.refresh_from_db()
         self.assertEqual(self.student.first_name, "Patched")
 
-    def test_partial_update_student_profile_department(self):
+    def test_partial_update_student_profile_join_date_year(self):
+        """PATCH student_profile to update the join_date_year field."""
         response = self.client.patch(
             self.detail_url,
-            {"student_profile": {"department": "Chemistry"}},
+            {"student_profile": {"join_date_year": 2026}},
             format="json",
             **auth_header(self.admin),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.student.student_profile.refresh_from_db()
-        self.assertEqual(self.student.student_profile.department, "Chemistry")
+        self.assertEqual(self.student.student_profile.join_date_year, 2026)
 
     def test_partial_update_student_unauthenticated_returns_401(self):
         response = self.client.patch(self.detail_url, {}, format="json")
@@ -387,20 +407,24 @@ class FacultyListCreateTests(APITestCase):
 
     list_url = reverse("v1:faculty-list")
 
+    # department is set in setUp so the FK exists before any request
     VALID_PAYLOAD = {
         "college_id": "DR999",
         "first_name": "Bob",
         "last_name": "Prof",
         "email": "bob.prof@faculty.test.com",
-        "faculty_profile": {
-            "department": "Engineering",
-        },
+        "faculty_profile": {},
     }
 
     def setUp(self):
+        self.dept = make_department()
         self.admin = make_admin()
         self.student = make_student()
         self.faculty = make_faculty()
+        self.VALID_PAYLOAD = {
+            **self.__class__.VALID_PAYLOAD,
+            "department": self.dept.code,
+        }
 
     # ---- list ----
 
@@ -454,7 +478,6 @@ class FacultyListCreateTests(APITestCase):
         )
         user = User.objects.get(college_id=self.VALID_PAYLOAD["college_id"])
         self.assertTrue(hasattr(user, "faculty_profile"))
-        self.assertEqual(user.faculty_profile.department, "Engineering")
 
     def test_create_faculty_sets_role_to_faculty(self):
         self.client.post(
@@ -496,6 +519,7 @@ class FacultyDetailTests(APITestCase):
     """Tests for GET/PUT/PATCH/DELETE /api/v1/accounts/faculty/{college_id}/"""
 
     def setUp(self):
+        self.dept = make_department()
         self.admin = make_admin()
         self.student = make_student()
         self.faculty = make_faculty()
@@ -541,7 +565,8 @@ class FacultyDetailTests(APITestCase):
             "first_name": "Updated",
             "last_name": "Faculty",
             "email": "updated.faculty@test.com",
-            "faculty_profile": {"department": "Physics"},
+            "department": self.dept.code,
+            "faculty_profile": {},
         }
         response = self.client.put(
             self.detail_url, payload, format="json", **auth_header(self.admin)
@@ -554,14 +579,14 @@ class FacultyDetailTests(APITestCase):
             "first_name": "NewFirst",
             "last_name": "NewLast",
             "email": "new@faculty.test.com",
-            "faculty_profile": {"department": "Math"},
+            "department": self.dept.code,
+            "faculty_profile": {},
         }
         self.client.put(
             self.detail_url, payload, format="json", **auth_header(self.admin)
         )
         self.faculty.refresh_from_db()
         self.assertEqual(self.faculty.first_name, "NewFirst")
-        self.assertEqual(self.faculty.faculty_profile.department, "Math")
 
     def test_full_update_faculty_unauthenticated_returns_401(self):
         response = self.client.put(self.detail_url, {}, format="json")
@@ -586,16 +611,15 @@ class FacultyDetailTests(APITestCase):
         self.faculty.refresh_from_db()
         self.assertEqual(self.faculty.first_name, "Patched")
 
-    def test_partial_update_faculty_profile_department(self):
+    def test_partial_update_faculty_profile_empty_patch(self):
+        """PATCH with an empty faculty_profile body should still return 200."""
         response = self.client.patch(
             self.detail_url,
-            {"faculty_profile": {"department": "Chemistry"}},
+            {"faculty_profile": {}},
             format="json",
             **auth_header(self.admin),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.faculty.faculty_profile.refresh_from_db()
-        self.assertEqual(self.faculty.faculty_profile.department, "Chemistry")
 
     def test_partial_update_faculty_unauthenticated_returns_401(self):
         response = self.client.patch(self.detail_url, {}, format="json")

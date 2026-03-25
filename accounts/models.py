@@ -4,6 +4,15 @@ from django.db import models
 from .managers import UserManager
 
 
+class Department(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    code = models.CharField(max_length=20, unique=True, primary_key=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class User(AbstractUser):
     ROLE_CHOICES = [
         ("student", "Student"),
@@ -24,6 +33,9 @@ class User(AbstractUser):
         max_length=20,
         choices=ROLE_CHOICES,
         default="student",
+    )
+    department = models.ForeignKey(
+        Department, on_delete=models.CASCADE, related_name="users"
     )
 
     objects = UserManager()
@@ -55,9 +67,6 @@ class StudentProfile(models.Model):
         limit_choices_to={"role": "student"},
     )
 
-    department = models.ForeignKey(
-        "courses.Department", on_delete=models.CASCADE, related_name="StudentProfile"
-    )
     join_date_year = models.PositiveSmallIntegerField(
         help_text="The calendar year the student enrolled, e.g. 2023",
     )
@@ -81,7 +90,6 @@ class FacultyProfile(models.Model):
         related_name="faculty_profile",
         limit_choices_to={"role": "faculty"},
     )
-    department = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f"FacultyProfile({self.user.college_id})"
@@ -119,4 +127,5 @@ class Admin(User):
         self.role = "admin"
         self.set_password(self.college_id)
         self.is_staff = True
+        self.department_id = "05"
         super().save(*args, **kwargs)

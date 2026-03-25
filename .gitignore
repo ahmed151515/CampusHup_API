@@ -74,5 +74,6 @@ migrations/
 pyrightconfig.json
 mypy.ini
 
-*/migrations/
+*/migrations/*
 
+node_modules/
