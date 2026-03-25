@@ -14,14 +14,12 @@ class StudentProfileInline(admin.StackedInline):
     model = StudentProfile
     can_delete = False
 
-    fieldsets = [(None, {"fields": ["department", "join_date_year"]})]
+    fieldsets = [(None, {"fields": ["join_date_year"]})]
 
 
 class FacultyProfileInline(admin.StackedInline):
     model = FacultyProfile
     can_delete = False
-
-    fields = ["department"]
 
 
 @admin.register(Student)
@@ -36,6 +34,7 @@ class StudentAdmin(admin.ModelAdmin):
                     "first_name",
                     "last_name",
                     "email",
+                    "department",
                 ]
             },
         )
@@ -57,6 +56,7 @@ class FacultyAdmin(admin.ModelAdmin):
                     "first_name",
                     "last_name",
                     "email",
+                    "department",
                 ]
             },
         )
@@ -77,6 +77,7 @@ class AdminUserAdmin(admin.ModelAdmin):
                     "first_name",
                     "last_name",
                     "email",
+                    "department",
                 ]
             },
         )
