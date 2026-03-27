@@ -65,6 +65,7 @@ class StudentProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="student_profile",
         limit_choices_to={"role": "student"},
+        primary_key=True,
     )
 
     join_date_year = models.PositiveSmallIntegerField(
@@ -89,6 +90,7 @@ class FacultyProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="faculty_profile",
         limit_choices_to={"role": "faculty"},
+        primary_key=True,
     )
 
     def __str__(self):
