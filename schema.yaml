@@ -1,0 +1,1561 @@
+openapi: 3.0.3
+info:
+  title: Campus Hub API
+  version: 1.0.0
+  description: Campus Hub Backend API
+paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - ht
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/{course_code}/attendance/:
+    get:
+      operationId: api_v1_attendance_list
+      description: Returns every record for the course. **Access:** Faculty of the
+        course or admin.
+      summary: List all attendance records for a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - Attendance
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+        '403':
+          description: Forbidden – not faculty or admin.
+    post:
+      operationId: api_v1_attendance_create
+      description: Enrolled student submits the 6-char faculty-generated code to be
+        marked present. Returns ``failed`` (no/wrong code) or ``already_marked`` (duplicate)
+        on error.
+      summary: Mark attendance using a session code
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: The unique course code.
+        required: true
+      tags:
+      - Attendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttendanceRequest'
+            examples:
+              ValidCodeSubmission:
+                value:
+                  code: a3f9c1
+                summary: Valid code submission
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateAttendanceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateAttendanceRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceFailedResponse'
+              examples:
+                AlreadyMarkedToday:
+                  value:
+                    detail: already_marked
+                  summary: Already marked today
+          description: '``detail``: "failed" (invalid code) or "already_marked" (duplicate).'
+        '403':
+          description: Forbidden – not an enrolled student.
+  /api/v1/{course_code}/attendance/{id}/:
+    patch:
+      operationId: api_v1_attendance_partial_update
+      description: Faculty manually sets ``is_present`` on a record. Only ``is_present``
+        is accepted.
+      summary: Override a student's attendance status
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: The unique course code.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this attendance.
+        required: true
+      tags:
+      - Attendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartialUpdateAttendanceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartialUpdateAttendanceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartialUpdateAttendanceRequest'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+        '403':
+          description: Forbidden – not faculty of this course.
+        '404':
+          description: No attendance record with the given pk.
+  /api/v1/{course_code}/attendance/code/:
+    get:
+      operationId: api_v1_attendance_code_retrieve
+      description: Returns the active 6-char code for the course (TTL 600 s). Creates
+        one on cache miss; resets TTL on cache hit. **Access:** Faculty only.
+      summary: Get or renew the session attendance code
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: The unique course code.
+        required: true
+      tags:
+      - Attendance
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCodeResponse'
+              examples:
+                SuccessfulCodeResponse:
+                  value:
+                    code: a3f9c1
+                    expires_in: 600
+                  summary: Successful code response
+          description: ''
+        '403':
+          description: Forbidden – not faculty of this course.
+  /api/v1/{course_code}/attendance/me/:
+    get:
+      operationId: api_v1_attendance_me_list
+      description: Returns only the current student's records for this course. **Access:**
+        Enrolled students only.
+      summary: Get the authenticated student's own attendance history
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: The unique course code.
+        required: true
+      tags:
+      - Attendance
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+        '403':
+          description: Forbidden – not an enrolled student.
+  /api/v1/accounts/departments/:
+    get:
+      operationId: api_v1_accounts_departments_list
+      description: Returns all departments ordered by name. **Access:** Any authenticated
+        user.
+      summary: List all departments
+      tags:
+      - Departments
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+          description: ''
+    post:
+      operationId: api_v1_accounts_departments_create
+      description: Creates a new department. **Access:** Admin only.
+      summary: Create a department
+      tags:
+      - Departments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Department'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Department'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+        '400':
+          description: Validation error – missing or duplicate fields.
+        '403':
+          description: Forbidden – admin role required.
+  /api/v1/accounts/departments/{code}/:
+    get:
+      operationId: api_v1_accounts_departments_retrieve
+      description: Returns a single department by its unique ``code``. **Access:**
+        Any authenticated user.
+      summary: Retrieve a department
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        description: The unique department code (e.g. ``CS``).
+        required: true
+      tags:
+      - Departments
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+        '404':
+          description: No department with the given code.
+    put:
+      operationId: api_v1_accounts_departments_update
+      description: Full update of a department record. **Access:** Admin only.
+      summary: Replace a department
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        description: The unique department code.
+        required: true
+      tags:
+      - Departments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Department'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Department'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+        '400':
+          description: Validation error.
+        '403':
+          description: Forbidden – admin role required.
+        '404':
+          description: No department with the given code.
+    patch:
+      operationId: api_v1_accounts_departments_partial_update
+      description: Updates one or more fields of a department. **Access:** Admin only.
+      summary: Partially update a department
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        description: The unique department code.
+        required: true
+      tags:
+      - Departments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartment'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+        '400':
+          description: Validation error.
+        '403':
+          description: Forbidden – admin role required.
+        '404':
+          description: No department with the given code.
+    delete:
+      operationId: api_v1_accounts_departments_destroy
+      description: Permanently deletes a department. **Access:** Admin only.
+      summary: Delete a department
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        description: The unique department code.
+        required: true
+      tags:
+      - Departments
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: Department deleted successfully.
+        '403':
+          description: Forbidden – admin role required.
+        '404':
+          description: No department with the given code.
+  /api/v1/accounts/faculty/:
+    get:
+      operationId: api_v1_accounts_faculty_list
+      description: Returns a paginated list of all **active** faculty accounts. Requires
+        administrator privileges.
+      summary: List all faculty members
+      tags:
+      - Faculty
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faculty'
+          description: ''
+    post:
+      operationId: api_v1_accounts_faculty_create
+      description: Creates a new faculty account together with its associated `faculty_profile`.
+        Password is auto-generated by the custom manager. Requires administrator privileges.
+      summary: Create a faculty member
+      tags:
+      - Faculty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faculty'
+          description: ''
+        '400':
+          description: Validation error
+  /api/v1/accounts/faculty/{college_id}/:
+    get:
+      operationId: api_v1_accounts_faculty_retrieve
+      description: Returns the full profile of a single faculty member identified
+        by their `college_id`. Requires administrator privileges.
+      summary: Retrieve a faculty member
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Faculty
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faculty'
+          description: ''
+        '404':
+          description: Faculty member not found
+    put:
+      operationId: api_v1_accounts_faculty_update
+      description: Fully replaces all writable fields on a faculty member and their
+        `faculty_profile`. Requires administrator privileges.
+      summary: Update a faculty member (full)
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Faculty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faculty'
+          description: ''
+        '400':
+          description: Validation error
+        '404':
+          description: Faculty member not found
+    patch:
+      operationId: api_v1_accounts_faculty_partial_update
+      description: Partially updates one or more fields on a faculty member and/or
+        their `faculty_profile`. All fields are optional. Requires administrator privileges.
+      summary: Update a faculty member (partial)
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Faculty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFaculty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFaculty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFaculty'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faculty'
+          description: ''
+        '400':
+          description: Validation error
+        '404':
+          description: Faculty member not found
+    delete:
+      operationId: api_v1_accounts_faculty_destroy
+      description: Soft-deletes the faculty member by setting `is_active = False`.
+        The database row is **never** removed, preserving all related data. Requires
+        administrator privileges.
+      summary: Deactivate a faculty member
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Faculty
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: Faculty member deactivated successfully
+        '404':
+          description: Faculty member not found
+  /api/v1/accounts/me/:
+    get:
+      operationId: api_v1_accounts_me_retrieve
+      description: |-
+        Returns the profile of the currently authenticated user.
+
+        The response shape depends on the caller's role:
+        - **student** → `StudentSerializer` (includes `student_profile`)
+        - **faculty** → `FacultySerializer` (includes `faculty_profile`)
+
+        Other roles (e.g. admin) `UserSerializer`.
+      summary: Get current user's profile
+      tags:
+      - Me
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+        '401':
+          description: Authentication credentials were not provided or are invalid.
+  /api/v1/accounts/students/:
+    get:
+      operationId: api_v1_accounts_students_list
+      description: Returns a paginated list of all **active** student accounts. Requires
+        administrator privileges.
+      summary: List all students
+      tags:
+      - Students
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+          description: ''
+    post:
+      operationId: api_v1_accounts_students_create
+      description: Creates a new student account together with its associated `student_profile`.
+        Password is auto-generated by the custom manager. Requires administrator privileges.
+      summary: Create a student
+      tags:
+      - Students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+        '400':
+          description: Validation error
+  /api/v1/accounts/students/{college_id}/:
+    get:
+      operationId: api_v1_accounts_students_retrieve
+      description: Returns the full profile of a single student identified by their
+        `college_id`. Requires administrator privileges.
+      summary: Retrieve a student
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Students
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+        '404':
+          description: Student not found
+    put:
+      operationId: api_v1_accounts_students_update
+      description: Fully replaces all writable fields on a student and their `student_profile`.
+        Requires administrator privileges.
+      summary: Update a student (full)
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+        '400':
+          description: Validation error
+        '404':
+          description: Student not found
+    patch:
+      operationId: api_v1_accounts_students_partial_update
+      description: Partially updates one or more fields on a student and/or their
+        `student_profile`. All fields are optional. Requires administrator privileges.
+      summary: Update a student (partial)
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStudent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStudent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStudent'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+        '400':
+          description: Validation error
+        '404':
+          description: Student not found
+    delete:
+      operationId: api_v1_accounts_students_destroy
+      description: Soft-deletes the student by setting `is_active = False`. The database
+        row is **never** removed, preserving all related data. Requires administrator
+        privileges.
+      summary: Deactivate a student
+      parameters:
+      - in: path
+        name: college_id
+        schema:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+        required: true
+      tags:
+      - Students
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: Student deactivated successfully
+        '404':
+          description: Student not found
+  /api/v1/auth/login/:
+    post:
+      operationId: api_v1_auth_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/v1/auth/logout/:
+    post:
+      operationId: api_v1_auth_logout_create
+      description: |-
+        Takes a token and blacklists it. Must be used with the
+        `rest_framework_simplejwt.token_blacklist` app installed.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenBlacklist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenBlacklist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenBlacklist'
+        required: true
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenBlacklist'
+          description: ''
+  /api/v1/auth/token/refresh/:
+    post:
+      operationId: api_v1_auth_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/courses/:
+    get:
+      operationId: api_v1_courses_list
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+          description: ''
+    post:
+      operationId: api_v1_courses_create
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Course'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+  /api/v1/courses/{course_code}/:
+    get:
+      operationId: api_v1_courses_retrieve
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: A unique value identifying this course.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    put:
+      operationId: api_v1_courses_update
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: A unique value identifying this course.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Course'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    patch:
+      operationId: api_v1_courses_partial_update
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: A unique value identifying this course.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    delete:
+      operationId: api_v1_courses_destroy
+      description: |-
+        CRUD operations for courses.
+
+        * GET /api/v1/courses/         → list all active courses
+        * POST /api/v1/courses/        → create a new course
+        * GET /api/v1/courses/{id}/    → retrieve a single course
+        * PUT/PATCH /api/v1/courses/{id}/ → update a course
+        * DELETE /api/v1/courses/{id}/ → delete a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        description: A unique value identifying this course.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    AttendanceCodeResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 6-character alphanumeric session code
+        expires_in:
+          type: integer
+          description: Seconds until the code expires (always 600)
+      required:
+      - code
+      - expires_in
+    AttendanceFailedResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: One of "failed" or "already_marked"
+      required:
+      - detail
+    AttendanceSerializers:
+      type: object
+      properties:
+        student_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          readOnly: true
+        is_present:
+          type: boolean
+        course_id:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        date:
+          type: string
+          format: date
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+      required:
+      - course_id
+      - created_at
+      - date
+      - id
+      - student_id
+    Course:
+      type: object
+      properties:
+        course_code:
+          type: string
+          maxLength: 20
+        course_name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        credit_hours:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        department:
+          type: string
+        semester:
+          type: integer
+          maximum: 14
+          minimum: 1
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          readOnly: true
+          nullable: true
+      required:
+      - course_code
+      - course_name
+      - created_at
+      - created_by
+      - credit_hours
+      - department
+      - semester
+      - updated_at
+    CreateAttendanceRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The 6-character session code displayed by the faculty.
+      required:
+      - code
+    Department:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          maxLength: 20
+        description:
+          type: string
+      required:
+      - code
+      - name
+    Faculty:
+      type: object
+      properties:
+        college_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        department:
+          type: string
+      required:
+      - college_id
+      - department
+      - email
+      - first_name
+      - last_name
+    PatchedCourse:
+      type: object
+      properties:
+        course_code:
+          type: string
+          maxLength: 20
+        course_name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        credit_hours:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        department:
+          type: string
+        semester:
+          type: integer
+          maximum: 14
+          minimum: 1
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          readOnly: true
+          nullable: true
+    PatchedDepartment:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          maxLength: 20
+        description:
+          type: string
+    PatchedFaculty:
+      type: object
+      properties:
+        college_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        department:
+          type: string
+    PatchedPartialUpdateAttendanceRequest:
+      type: object
+      properties:
+        is_present:
+          type: boolean
+          description: true = present, false = absent.
+    PatchedStudent:
+      type: object
+      properties:
+        college_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        department:
+          type: string
+        student_profile:
+          $ref: '#/components/schemas/StudentProfile'
+    Student:
+      type: object
+      properties:
+        college_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        department:
+          type: string
+        student_profile:
+          $ref: '#/components/schemas/StudentProfile'
+      required:
+      - college_id
+      - department
+      - email
+      - first_name
+      - last_name
+      - student_profile
+    StudentProfile:
+      type: object
+      properties:
+        join_date_year:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: The calendar year the student enrolled, e.g. 2023
+        gpa:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,2})?$
+          readOnly: true
+          description: GPA on a 4.0 scale
+      required:
+      - gpa
+      - join_date_year
+    TokenBlacklist:
+      type: object
+      properties:
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - refresh
+    TokenObtainPair:
+      type: object
+      properties:
+        college_id:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - college_id
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    User:
+      type: object
+      properties:
+        college_id:
+          type: string
+          description: 'Student: 202603001 | Faculty: DR001 | Admin: ADMIN01'
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        department:
+          type: string
+      required:
+      - college_id
+      - department
+      - email
+      - first_name
+      - last_name
+    UserProfile:
+      oneOf:
+      - $ref: '#/components/schemas/Student'
+      - $ref: '#/components/schemas/Faculty'
+      - $ref: '#/components/schemas/User'
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+servers:
+- url: http://127.0.0.1:8000
+  description: Development
