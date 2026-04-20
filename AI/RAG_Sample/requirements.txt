@@ -1,0 +1,10 @@
+langchain
+langchain-community
+ollama
+PyPDF2
+openpyxl
+fastapi
+uvicorn
+click
+pydantic
+python-dotenv

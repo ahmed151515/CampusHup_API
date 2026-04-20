@@ -1,0 +1,127 @@
+╔════════════════════════════════════════════════════════════════════╗
+║                    RAG SYSTEM QUICK REFERENCE                     ║
+╚════════════════════════════════════════════════════════════════════╝
+
+🎯 IMMEDIATE NEXT STEPS:
+┌────────────────────────────────────────────────────────────────────┐
+│ 1. pip install -r requirements.txt                                 │
+│ 2. ollama serve  (separate terminal)                               │
+│ 3. python main.py build-index --data-dir .                         │
+│ 4. python main.py query                                            │
+└────────────────────────────────────────────────────────────────────┘
+
+📋 CLI COMMANDS:
+┌────────────────────────────────────────────────────────────────────┐
+│ build-index    Build/rebuild Faiss index                           │
+│ query          Interactive query prompt                            │
+│ check-ollama   Verify Ollama is running                            │
+│ check-index    Check if index exists                               │
+└────────────────────────────────────────────────────────────────────┘
+
+🌐 REST API:
+┌────────────────────────────────────────────────────────────────────┐
+│ Start:  python api.py                                              │
+│ Docs:   http://localhost:8000/docs                                 │
+│ Query:  POST /query                                                │
+│ Stream: POST /query/stream                                         │
+│ Health: GET /health                                                │
+└────────────────────────────────────────────────────────────────────┘
+
+📁 KEY FILES:
+┌────────────────────────────────────────────────────────────────────┐
+│ config.py         Settings & hyperparameters                       │
+│ main.py           Entry point                                      │
+│ cli.py            Command-line interface                           │
+│ api.py            REST API server                                  │
+│ retrieval.py      RAG pipeline                                     │
+│ document_loader   PDF/Excel parsing                                │
+└────────────────────────────────────────────────────────────────────┘
+
+⚙️ CONFIGURATION (config.py):
+┌────────────────────────────────────────────────────────────────────┐
+│ EMBEDDING_MODEL = "all-minilm:latest"                              │
+│ LLM_MODEL = "llama3.2:latest"                                      │
+│ CHUNK_SIZE = 512                                                   │
+│ TOP_K_RESULTS = 5                                                  │
+│ API_PORT = 8000                                                    │
+└────────────────────────────────────────────────────────────────────┘
+
+🆘 TROUBLESHOOTING:
+┌────────────────────────────────────────────────────────────────────┐
+│ Ollama error      → ollama serve (separate terminal)               │
+│ Index not found   → python main.py build-index --data-dir .        │
+│ Module not found  → pip install -r requirements.txt                │
+│ Connection error  → Check ollama serve is running                  │
+└────────────────────────────────────────────────────────────────────┘
+
+📚 DOCUMENTATION:
+┌────────────────────────────────────────────────────────────────────┐
+│ FINAL_SUMMARY.txt     ← Start here (detailed overview)             │
+│ START_HERE.txt        ← Visual setup guide                         │
+│ QUICKSTART.md         ← 5-minute setup                             │
+│ README.md             ← Full documentation                         │
+│ API_EXAMPLES.md       ← REST API examples                          │
+└────────────────────────────────────────────────────────────────────┘
+
+🔍 TEST SYSTEM:
+┌────────────────────────────────────────────────────────────────────┐
+│ python test_system.py                                              │
+│                                                                    │
+│ Checks:                                                            │
+│ ✓ Ollama availability                                              │
+│ ✓ Document files                                                   │
+│ ✓ Faiss index                                                      │
+│ ✓ Embedding generation                                             │
+│ ✓ Full query pipeline                                              │
+└────────────────────────────────────────────────────────────────────┘
+
+💡 EXAMPLE QUERIES:
+┌────────────────────────────────────────────────────────────────────┐
+│ • What are the vacation policies?                                  │
+│ • How many vacation days do employees get?                         │
+│ • List all employees                                               │
+│ • What are company benefits?                                       │
+│ • Tell me about leave policy                                       │
+└────────────────────────────────────────────────────────────────────┘
+
+🎓 MODELS:
+┌────────────────────────────────────────────────────────────────────┐
+│ Embedding: all-minilm:latest (45 MB)                               │
+│ LLM:       llama3.2:latest (2.0 GB)                                │
+│ Vector DB: Faiss (persisted to disk)                               │
+└────────────────────────────────────────────────────────────────────┘
+
+📊 SYSTEM FLOW:
+┌────────────────────────────────────────────────────────────────────┐
+│                                                                    │
+│  Document → Parse → Chunk → Embed → Index (Faiss)                 │
+│                                          ↓                        │
+│                                      Query ↓ Retrieve              │
+│                                          ↓                        │
+│                                  LLM Generate Answer               │
+│                                          ↓                        │
+│                                    Response + Sources              │
+│                                                                    │
+└────────────────────────────────────────────────────────────────────┘
+
+✨ PYTHON API:
+┌────────────────────────────────────────────────────────────────────┐
+│ from retrieval import RAGChain                                      │
+│ from vector_db import FaissVectorDB                                │
+│ from embeddings import OllamaEmbedder                              │
+│                                                                    │
+│ embedder = OllamaEmbedder()                                        │
+│ db = FaissVectorDB()                                               │
+│ db.load()                                                          │
+│                                                                    │
+│ rag = RAGChain(db, embedder)                                       │
+│ result = rag.query("Your question")                                │
+│ print(result["answer"])                                            │
+└────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+READY? Start with: python main.py build-index --data-dir .
+Then: python main.py query
+
+═══════════════════════════════════════════════════════════════════════════════
