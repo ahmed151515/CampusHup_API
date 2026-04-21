@@ -1,0 +1,2 @@
+repo,file_count,node_count,edge_count,flow_detection_seconds,community_detection_seconds,search_avg_ms,nodes_per_second
+gin,99,1613,17577,0.114,0.151,1.4,14090

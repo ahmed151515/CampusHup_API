@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "code-review-graph": {
+      "command": "uvx",
+      "args": ["code-review-graph", "serve"],
+      "type": "stdio"
+    },
+    "token-savior": {
+          "type": "local",
+          "command": [
+            "uvx.exe",
+            "--python", "3.13",
+            "--with", "token-savior-recall[mcp]",
+            "--from", "token-savior-recall",
+            "token-savior"
+          ],
+          "enabled": true,
+          "environment": {
+            "PYTHONUTF8": "1",
+            "WORKSPACE_ROOTS": "C:\\Users\\ahmed\\Desktop\\Projects\\CampusHup_API\\CampusHup_API",
+            "TOKEN_SAVIOR_CLIENT": "opencode",
+            "TOKEN_SAVIOR_PROFILE": "core"
+          }
+        }
+      }
+  }
+}

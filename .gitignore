@@ -4,6 +4,8 @@ env/
 .venv/
 
 
+
+
 # Python
 __pycache__/
 *.py[cod]
@@ -77,3 +79,9 @@ mypy.ini
 */migrations/*
 
 node_modules/
+
+plan.md
+
+.opencode/*
+# Added by code-review-graph
+.code-review-graph/

@@ -1,4 +1,4 @@
-from .settings import *
+from .base import *
 
 # Fast password hashing for tests
 PASSWORD_HASHERS = [

@@ -1,0 +1,2 @@
+repo,file_count,node_count,edge_count,flow_detection_seconds,community_detection_seconds,search_avg_ms,nodes_per_second
+nextjs,169,2707,18953,0.401,0.366,7.7,6746
