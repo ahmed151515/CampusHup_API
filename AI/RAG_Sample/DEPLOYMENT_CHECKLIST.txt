@@ -1,0 +1,211 @@
+═══════════════════════════════════════════════════════════════════════════════
+                     ✅ RAG SYSTEM DEPLOYMENT CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+Before You Start:
+─────────────────────────────────────────────────────────────────────────────
+☐ Python 3.8+ installed (python --version)
+☐ Ollama installed (ollama --version)
+☐ ~2GB free disk space for models
+☐ PDF and Excel files in project folder
+
+
+Installation Phase:
+─────────────────────────────────────────────────────────────────────────────
+☐ Navigate to: C:\Users\zedan\OneDrive\Documents\RAG_Sample
+☐ Install dependencies: pip install -r requirements.txt
+  - Wait for completion (should be < 5 minutes)
+  - Check for errors - if any, see Troubleshooting section
+
+☐ Verify Python packages installed:
+  - Open Python: python
+  - Import check: import faiss; import langchain; exit()
+  - Should complete without errors
+
+
+Ollama Setup:
+─────────────────────────────────────────────────────────────────────────────
+☐ Open NEW PowerShell window
+☐ Run: ollama serve
+  - Should see: "Listening on 127.0.0.1:11434"
+  - Keep this window OPEN (don't close it)
+
+☐ In ANOTHER window, verify models:
+  - Run: ollama list
+  - Should show:
+    • all-minilm:latest (45 MB)
+    • llama3.2:latest (2.0 GB)
+
+☐ If models missing, pull them:
+  - Run: ollama pull all-minilm
+  - Run: ollama pull llama3.2
+  - Wait for downloads to complete
+
+
+System Verification:
+─────────────────────────────────────────────────────────────────────────────
+☐ Run diagnostic test:
+  - python test_system.py
+  - Should show:
+    ✓ Ollama is available
+    ✓ Documents found
+    ✗ Index not available (OK - not built yet)
+
+☐ All checks except Index should be PASSING
+
+
+Building the Index:
+─────────────────────────────────────────────────────────────────────────────
+☐ Ensure:
+  - ollama serve is still running
+  - You're in correct directory
+
+☐ Build index:
+  - Run: python main.py build-index --data-dir .
+  - Wait for completion
+  - Should see:
+    • "Processing PDF..."
+    • "Processing Excel..."
+    • "Generating embeddings... (this may take a while)"
+    • "✓ Index saved successfully"
+
+☐ Index should now exist:
+  - Check: python main.py check-index
+  - Should show vector count
+
+
+First Query:
+─────────────────────────────────────────────────────────────────────────────
+☐ Test with CLI:
+  - Run: python main.py query
+  - Enter question: "What are the vacation policies?"
+  - Should get an answer from your documents
+
+☐ Verify it works:
+  - Answer references your documents
+  - Sources are shown
+  - No errors in output
+
+
+API Testing (Optional):
+─────────────────────────────────────────────────────────────────────────────
+☐ Start API server:
+  - Run: python api.py
+  - Should see: "Application startup complete"
+  - Access: http://localhost:8000/docs
+
+☐ Test health endpoint:
+  - Visit: http://localhost:8000/health
+  - Should return JSON with status
+
+☐ Test query endpoint:
+  - Use Swagger UI or curl
+  - Should get response from your documents
+
+
+Ongoing Usage:
+─────────────────────────────────────────────────────────────────────────────
+For each session:
+☐ Start ollama serve (in separate window)
+☐ Query system (CLI or API)
+☐ Index is persistent (no rebuild needed)
+
+
+Maintenance:
+─────────────────────────────────────────────────────────────────────────────
+To add more documents:
+☐ Add PDF/Excel files to project folder
+☐ Rebuild index: python main.py build-index --data-dir .
+☐ Queries will use updated index
+
+To customize settings:
+☐ Edit config.py
+☐ Change model names, chunk size, etc.
+☐ Rebuild index if document processing settings changed
+
+
+Troubleshooting Checklist:
+─────────────────────────────────────────────────────────────────────────────
+Issue: "Ollama not available"
+☐ Check: ollama serve running?
+☐ Solution: Start ollama serve in new window
+
+Issue: "Index not found"
+☐ Check: python main.py check-index
+☐ Solution: Run python main.py build-index --data-dir .
+
+Issue: "Module not found"
+☐ Check: pip list | grep -E "langchain|faiss|ollama"
+☐ Solution: Run pip install -r requirements.txt
+
+Issue: "Slow responses"
+☐ Normal on first query (embedding generation)
+☐ Subsequent queries should be instant
+
+Issue: "Connection refused"
+☐ Check: Ollama is running?
+☐ Check: Port 11434 not blocked?
+☐ Solution: Restart ollama serve
+
+Issue: "Port already in use"
+☐ For API, edit config.py: API_PORT = 8001
+☐ Restart API
+
+
+Performance Optimization:
+─────────────────────────────────────────────────────────────────────────────
+For faster embedding:
+☐ Reduce CHUNK_SIZE in config.py
+☐ Reduce number of documents
+
+For better answers:
+☐ Increase TOP_K_RESULTS in config.py
+☐ Use larger CHUNK_SIZE
+
+For faster API response:
+☐ Reduce TOP_K_RESULTS
+☐ Decrease SIMILARITY_THRESHOLD
+
+
+Documentation Reference:
+─────────────────────────────────────────────────────────────────────────────
+For quick reference:
+☐ QUICK_REFERENCE.txt - Cheat sheet
+☐ QUICKSTART.md - 5-minute setup
+
+For detailed info:
+☐ README.md - Full documentation
+☐ API_EXAMPLES.md - REST API examples
+
+For troubleshooting:
+☐ See Troubleshooting section in README.md
+☐ Run test_system.py for diagnostics
+
+
+Final Verification:
+─────────────────────────────────────────────────────────────────────────────
+Before declaring "complete":
+☐ Ollama serve is running
+☐ test_system.py passes (except Index before first build)
+☐ Index is built
+☐ CLI query works
+☐ At least one query returns correct answer
+
+
+Status:
+─────────────────────────────────────────────────────────────────────────────
+When all checkboxes above are checked:
+
+✅ RAG System is READY for production use!
+
+You can now:
+• Ask questions about your documents
+• Scale to larger document sets
+• Integrate with other applications
+• Customize models and parameters
+• Deploy via REST API
+
+
+═══════════════════════════════════════════════════════════════════════════════
+Next: Follow the Quick Start section above or read QUICK_REFERENCE.txt
+═══════════════════════════════════════════════════════════════════════════════
