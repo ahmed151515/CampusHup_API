@@ -10,7 +10,12 @@ DATABASES = {
         getenv("DATABASE_URL"), conn_max_age=600, conn_health_checks=True
     )
 }
-SPECTACULAR_SETTINGS["SERVERS"] = ""
+SPECTACULAR_SETTINGS["SERVERS"] = [
+    {
+        "url": "https://campus-hup-api--ahmedarafa20044.replit.app",
+        "description": "Production",
+    },
+]
 
 CACHES = {
     "default": {
