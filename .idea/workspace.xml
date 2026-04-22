@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e60cf52d-6159-41d2-bcd2-a1626e858a30" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.claude/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/debug-issue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/explore-codebase.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/refactor-safely.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/review-changes.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.continue/mcpServers/new-mcp-server.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cursorrules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.kiro/steering/code-review-graph.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mcp.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.opencode.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.windsurfrules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GEMINI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/management/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/management/commands/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/management/commands/seed.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/managers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/permissions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views/department.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views/faculty.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views/me.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views/student.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/permissions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendances/view.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routers/v1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/dev.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/prod.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/views/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/courses/views/course.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/reports/summary.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/express_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/express_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/express_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/express_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/express_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_build_performance_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_flow_completeness_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_impact_accuracy_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_search_quality_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_token_efficiency_2026-04-19.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/express" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/fastapi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/flask" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/gin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/httpx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/nextjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.yaml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="attendance-app" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ahmed151515&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ahmed151515/CampusHup_API.git&quot;,
+    &quot;accountId&quot;: &quot;38af0f93-b655-4c0b-8ea5-01883234b847&quot;
+  }
+}</component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="39wz6q4750KZSxGalsgBtE3uUNI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.run.executor": "Run",
+    "Django tests.Test: attendances.tests.AttendanceListTests.test_list_as_admin_returns_200.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Notification.DisplayName-DoNotAsk-com.almightyalpaca.intellij.plugins.discord.project.show": "com.almightyalpaca.intellij.plugins.discord.project.show",
+    "Notification.DoNotAsk-com.almightyalpaca.intellij.plugins.discord.project.show": "true",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "code.cleanup.on.save": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ahmed/Desktop/Projects/CampusHup_API/CampusHup_API",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.language.Kotlin",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ahmed\Desktop\Projects\CampusHup_API\CampusHup_API\config\settings" />
+      <recent name="C:\Users\ahmed\Desktop\Projects\CampusHup_API\CampusHup_API\accounts\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ahmed\Desktop\Projects\CampusHup_API\CampusHup_API\config\settings" />
+      <recent name="C:\Users\ahmed\Desktop\Projects\CampusHup_API\CampusHup_API\accounts\management\commands" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.CampusHup_API">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="CampusHup_API" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="CampusHup_API" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="CampusHup_API" type="Python.DjangoServer" factoryName="Django server">
+      <module name="CampusHup_API" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="Python.DjangoServer" factoryName="Django server">
+      <module name="CampusHup_API" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (CampusHup_API)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Django Server.CampusHup_API" />
+      <item itemvalue="Django Server.run" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28238.7" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e60cf52d-6159-41d2-bcd2-a1626e858a30" name="Changes" comment="" />
+      <created>1771621759287</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771621759287</updated>
+      <workItem from="1771621761646" duration="1159000" />
+      <workItem from="1772369326389" duration="4398000" />
+      <workItem from="1772460950393" duration="3387000" />
+      <workItem from="1772511221974" duration="60000" />
+      <workItem from="1772511369879" duration="32000" />
+      <workItem from="1772712576130" duration="17000" />
+      <workItem from="1774205304330" duration="8688000" />
+      <workItem from="1774292390766" duration="6438000" />
+      <workItem from="1774364873854" duration="4304000" />
+      <workItem from="1774447208675" duration="1088000" />
+      <workItem from="1774448599971" duration="3705000" />
+      <workItem from="1774453076604" duration="205000" />
+      <workItem from="1774635644072" duration="12885000" />
+      <workItem from="1774768272604" duration="101000" />
+      <workItem from="1774768538093" duration="14694000" />
+      <workItem from="1774798212349" duration="1390000" />
+      <workItem from="1775123067306" duration="4002000" />
+      <workItem from="1775736153867" duration="5880000" />
+      <workItem from="1776348562833" duration="3166000" />
+      <workItem from="1776521549299" duration="92000" />
+      <workItem from="1776755987628" duration="798000" />
+      <workItem from="1776756809239" duration="1291000" />
+      <workItem from="1776758126948" duration="905000" />
+      <workItem from="1776759126436" duration="2413000" />
+      <workItem from="1776761581778" duration="4889000" />
+      <workItem from="1776782249676" duration="831000" />
+      <workItem from="1776783187998" duration="357000" />
+      <workItem from="1776783570342" duration="1425000" />
+      <workItem from="1776785370023" duration="718000" />
+      <workItem from="1776786231401" duration="148000" />
+      <workItem from="1776787043133" duration="621000" />
+      <workItem from="1776787693793" duration="104000" />
+    </task>
+    <task id="LOCAL-00001" summary="start project">
+      <option name="closed" value="true" />
+      <created>1771622919856</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1771622919856</updated>
+    </task>
+    <task id="LOCAL-00002" summary="start accounts app">
+      <option name="closed" value="true" />
+      <created>1772368905485</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1772368905485</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix app settings.py">
+      <option name="closed" value="true" />
+      <created>1772368977091</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1772368977091</updated>
+    </task>
+    <task id="LOCAL-00004" summary="refactor: user.college is primary_key">
+      <option name="closed" value="true" />
+      <created>1774206626776</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774206626776</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: django circular dependency by moving the department to accounts">
+      <option name="closed" value="true" />
+      <created>1774452894635</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774452894635</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: seed command in accounts to add init data">
+      <option name="closed" value="true" />
+      <created>1774452987182</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774452987182</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: admin page for profiles">
+      <option name="closed" value="true" />
+      <created>1774453278336</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774453278336</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactor: in profiles remove id column and make the user the primary key">
+      <option name="closed" value="true" />
+      <created>1774642205315</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774642205315</updated>
+    </task>
+    <task id="LOCAL-00009" summary="docs : add docs to accounts/views/department.py">
+      <option name="closed" value="true" />
+      <created>1774799376725</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1774799376725</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat : done attendance app">
+      <option name="closed" value="true" />
+      <created>1774799476828</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1774799476828</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:hbs" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:ejs" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/express" />
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/fastapi" />
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/flask" />
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/gin" />
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/httpx" />
+      <path value="$PROJECT_DIR$/AI/evaluate/test_repos/nextjs" />
+    </ignored-roots>
+    <MESSAGE value="start project" />
+    <MESSAGE value="start accounts app" />
+    <MESSAGE value="fix app settings.py" />
+    <MESSAGE value="refactor: user.college is primary_key" />
+    <MESSAGE value="fix: django circular dependency by moving the department to accounts" />
+    <MESSAGE value="feat: seed command in accounts to add init data" />
+    <MESSAGE value="fix: admin page for profiles" />
+    <MESSAGE value="refactor: in profiles remove id column and make the user the primary key" />
+    <MESSAGE value="docs : add docs to accounts/views/department.py" />
+    <MESSAGE value="feat : done attendance app" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : done attendance app" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CampusHup_API$Test__attendances_tests_AttendanceListTests_test_list_as_admin_returns_200.coverage" NAME="Test: attendances.tests.AttendanceListTests.test_list_as_admin_returns_200 Coverage Results" MODIFIED="1774778920849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
