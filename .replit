@@ -35,5 +35,5 @@ externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["bash", "-c", "cd backend && ENV=dev gunicorn --bind=0.0.0.0:5000 config.wsgi:application"]
-build = ["bash", "-c", "cd backend && ENV=dev python manage.py migrate --noinput"]
+run = ["bash", "-c", "cd backend && pip install -r requirements.txt && python manage.py migrate && python manage.py"]
+build = ["bash", "-c", "cd backend && pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput"]

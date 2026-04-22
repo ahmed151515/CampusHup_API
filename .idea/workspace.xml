@@ -4,112 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e60cf52d-6159-41d2-bcd2-a1626e858a30" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.claude/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/debug-issue.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/explore-codebase.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/refactor-safely.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/review-changes.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.continue/mcpServers/new-mcp-server.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cursorrules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.kiro/steering/code-review-graph.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mcp.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.opencode.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.windsurfrules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GEMINI.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/management/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/management/commands/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/management/commands/seed.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/managers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/permissions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/serializers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views/department.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views/faculty.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views/me.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views/student.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/permissions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/serializers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendances/view.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/asgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routers/v1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/base.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/dev.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/prod.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/serializers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/views/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/views/course.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/reports/summary.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/express_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/express_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/express_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/express_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/express_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/fastapi_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/flask_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/gin_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/httpx_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_build_performance_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_flow_completeness_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_impact_accuracy_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_search_quality_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/results/nextjs_token_efficiency_2026-04-19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/express" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/fastapi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/flask" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/gin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/httpx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate/test_repos/nextjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.yaml" beforeDir="false" />
-    </list>
+    <list default="true" id="e60cf52d-6159-41d2-bcd2-a1626e858a30" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,6 +21,7 @@
       </list>
     </option>
   </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -182,6 +78,7 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ahmed/Desktop/Projects/CampusHup_API/CampusHup_API",
@@ -191,8 +88,8 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.14232902",
     "settings.editor.selected.configurable": "preferences.language.Kotlin",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -208,7 +105,7 @@
       <recent name="C:\Users\ahmed\Desktop\Projects\CampusHup_API\CampusHup_API\accounts\management\commands" />
     </key>
   </component>
-  <component name="RunManager" selected="Django Server.CampusHup_API">
+  <component name="RunManager" selected="Django Server.run">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="CampusHup_API" />
       <working_directory value="$PROJECT_DIR$" />
@@ -229,6 +126,30 @@
       <method v="2" />
     </configuration>
     <configuration name="CampusHup_API" type="Python.DjangoServer" factoryName="Django server">
+      <module name="CampusHup_API" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <module name="CampusHup_API" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -285,8 +206,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
-        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28238.7" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28539.33" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28539.33" />
       </set>
     </attachedChunks>
   </component>
@@ -329,6 +250,7 @@
       <workItem from="1776786231401" duration="148000" />
       <workItem from="1776787043133" duration="621000" />
       <workItem from="1776787693793" duration="104000" />
+      <workItem from="1776853839440" duration="361000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <option name="closed" value="true" />
