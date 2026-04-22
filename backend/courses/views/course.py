@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -6,6 +7,14 @@ from ..models import Course
 from ..serializers import CourseSerializer
 
 
+@extend_schema_view(
+    list=extend_schema(tags=["courses"]),
+    create=extend_schema(tags=["courses"]),
+    retrieve=extend_schema(tags=["courses"]),
+    update=extend_schema(tags=["courses"]),
+    partial_update=extend_schema(tags=["courses"]),
+    destroy=extend_schema(tags=["courses"]),
+)
 class CourseViewSet(viewsets.ModelViewSet):
     """
     CRUD operations for courses.

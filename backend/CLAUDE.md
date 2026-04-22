@@ -1,38 +1,87 @@
-<!-- code-review-graph MCP tools -->
-## MCP Tools: code-review-graph
+# CampusHup API — Agent Instructions
 
-**IMPORTANT: This project has a knowledge graph. ALWAYS use the
-code-review-graph MCP tools BEFORE using Grep/Glob/Read to explore
-the codebase.** The graph is faster, cheaper (fewer tokens), and gives
-you structural context (callers, dependents, test coverage) that file
-scanning cannot.
+## Project Stack
+- Django 6 + Django REST Framework
+- drf-spectacular (Swagger/OpenAPI docs)
+- SimpleJWT for authentication
+- pytest + pytest-django for tests
 
-### When to use graph tools FIRST
+---
 
-- **Exploring code**: `semantic_search_nodes` or `query_graph` instead of Grep
-- **Understanding impact**: `get_impact_radius` instead of manually tracing imports
-- **Code review**: `detect_changes` + `get_review_context` instead of reading entire files
-- **Finding relationships**: `query_graph` with callers_of/callees_of/imports_of/tests_for
-- **Architecture questions**: `get_architecture_overview` + `list_communities`
+## Conventions Every Agent Must Follow
 
-Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
+### 1. Swagger Tags — REQUIRED on every endpoint
 
-### Key Tools
+Every view/viewset **must** have a `drf-spectacular` tag so it appears in the correct group in the Swagger UI.
 
-| Tool | Use when |
-|------|----------|
-| `detect_changes` | Reviewing code changes — gives risk-scored analysis |
-| `get_review_context` | Need source snippets for review — token-efficient |
-| `get_impact_radius` | Understanding blast radius of a change |
-| `get_affected_flows` | Finding which execution paths are impacted |
-| `query_graph` | Tracing callers, callees, imports, tests, dependencies |
-| `semantic_search_nodes` | Finding functions/classes by name or keyword |
-| `get_architecture_overview` | Understanding high-level codebase structure |
-| `refactor_tool` | Planning renames, finding dead code |
+**For ViewSets** — use `@extend_schema_view` on the class:
 
-### Workflow
+```python
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
-1. The graph auto-updates on file changes (via hooks).
-2. Use `detect_changes` for code review.
-3. Use `get_affected_flows` to understand impact.
-4. Use `query_graph` pattern="tests_for" to check coverage.
+@extend_schema_view(
+    list=extend_schema(tags=["<app_name>"]),
+    create=extend_schema(tags=["<app_name>"]),
+    retrieve=extend_schema(tags=["<app_name>"]),
+    update=extend_schema(tags=["<app_name>"]),
+    partial_update=extend_schema(tags=["<app_name>"]),
+    destroy=extend_schema(tags=["<app_name>"]),
+)
+class MyViewSet(viewsets.ModelViewSet):
+    ...
+```
+
+**For individual APIViews / third-party views wired in urls.py** — apply inline:
+
+```python
+from drf_spectacular.utils import extend_schema
+
+path(
+    "auth/login/",
+    extend_schema(tags=["auth"])(TokenObtainPairView).as_view(),
+    name="token_obtain_pair",
+),
+```
+
+**Tag naming rules:**
+- Use the Django **app name** as the tag (e.g., `"courses"`, `"accounts"`, `"attendances"`)
+- Auth-related views use `"auth"`
+- Always lowercase, always a list: `tags=["courses"]`
+
+---
+
+### 2. Permissions
+
+- Read-only endpoints for any authenticated user → `IsAdminOrReadOnly`
+- Admin-only write endpoints → `IsAdmin`
+- Custom per-app logic → create a `permissions.py` inside the app
+
+---
+
+### 3. Tests — required for every new endpoint
+
+- Use `APITestCase` from DRF
+- Reuse helpers from `accounts/tests.py`: `auth_header`, `get_list_data`, `make_admin`, `make_department`, `make_student`, `make_faculty`
+- One assertion per test method
+- Name format: `test_<action>_<scenario>_<expected>`
+- Cover all roles: admin, faculty, student, unauthenticated
+- Standard HTTP checks: 200, 201, 204, 400, 401, 403, 404
+
+---
+
+### 4. URL structure
+
+```
+/api/v1/accounts/      → accounts app
+/api/v1/courses/       → courses app
+/api/v1/auth/          → JWT auth (login, refresh, logout)
+/api/v1/<course_code>/attendance/ → attendances app
+```
+
+---
+
+### 5. User model
+
+- Primary key is `college_id` (not `id`)
+- Roles: `"student"`, `"faculty"`, `"admin"`
+- Always use `User.objects.create_student(...)`, `create_faculty(...)`, `create_admin(...)` — not `User.objects.create(...)`

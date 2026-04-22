@@ -1,4 +1,5 @@
 from django.urls import include, path
+from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -10,7 +11,19 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("courses/", include("courses.urls")),
     path("<str:course_code>/attendance/", include("attendances.urls")),
-    path("auth/login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("auth/logout/", TokenBlacklistView.as_view(), name="token_blacklist"),
+    path(
+        "auth/login/",
+        extend_schema(tags=["auth"])(TokenObtainPairView).as_view(),
+        name="token_obtain_pair",
+    ),
+    path(
+        "auth/token/refresh/",
+        extend_schema(tags=["auth"])(TokenRefreshView).as_view(),
+        name="token_refresh",
+    ),
+    path(
+        "auth/logout/",
+        extend_schema(tags=["auth"])(TokenBlacklistView).as_view(),
+        name="token_blacklist",
+    ),
 ]
