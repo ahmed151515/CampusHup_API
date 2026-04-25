@@ -342,6 +342,362 @@ paths:
           description: ''
         '403':
           description: Forbidden – not an enrolled student.
+  /api/v1/{course_code}/quiz/:
+    get:
+      operationId: api_v1_quiz_list
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: List quizzes for a course
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuizList'
+          description: ''
+    post:
+      operationId: api_v1_quiz_create
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: Create a quiz with nested questions
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizCreateUpdate'
+          description: ''
+  /api/v1/{course_code}/quiz/{id}/:
+    get:
+      operationId: api_v1_quiz_retrieve
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: Retrieve a quiz with its questions
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetail'
+          description: ''
+    put:
+      operationId: api_v1_quiz_update
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: Replace a quiz (blocked if submissions exist)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuizCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizCreateUpdate'
+          description: ''
+    patch:
+      operationId: api_v1_quiz_partial_update
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: Partially update a quiz (blocked if submissions exist)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuizCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuizCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuizCreateUpdate'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizCreateUpdate'
+          description: ''
+    delete:
+      operationId: api_v1_quiz_destroy
+      description: |-
+        Quiz management for a course.
+
+        Views are thin: authentication + permission checks + delegation to model methods.
+        All business logic lives in QuizSubmission model methods.
+      summary: Delete a quiz (blocked if submissions exist)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/{course_code}/quiz/{id}/my-grade/:
+    get:
+      operationId: api_v1_quiz_my_grade_retrieve
+      description: Student retrieves their own submission and grade breakdown.
+      summary: Get own grade (student)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetail'
+          description: ''
+  /api/v1/{course_code}/quiz/{id}/start/:
+    post:
+      operationId: api_v1_quiz_start_create
+      description: |-
+        Student starts a quiz. Creates a QuizSubmission and records started_at.
+        Idempotent — multiple calls return the same submission without error.
+      summary: Start a quiz (records start time)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuizDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuizDetail'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetail'
+          description: ''
+  /api/v1/{course_code}/quiz/{id}/submissions/:
+    get:
+      operationId: api_v1_quiz_submissions_retrieve
+      description: Faculty / admin views all submissions with scores for a quiz.
+      summary: List all student submissions (faculty/admin)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetail'
+          description: ''
+  /api/v1/{course_code}/quiz/{id}/submit/:
+    post:
+      operationId: api_v1_quiz_submit_create
+      description: |-
+        Student submits answers. Delegates all logic to QuizSubmission.submit().
+
+        Handles edge cases:
+        - Submit without calling /start/ first → auto-records started_at.
+        - Already submitted → 400.
+        - Time expired → 400.
+        - Partial answers → accepted.
+      summary: Submit quiz answers (auto-graded, time-enforced)
+      parameters:
+      - in: path
+        name: course_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - quiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizSubmit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuizSubmit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuizSubmit'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetail'
+          description: ''
   /api/v1/accounts/departments/:
     get:
       operationId: api_v1_accounts_departments_list
@@ -918,7 +1274,7 @@ paths:
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - api
+      - auth
       requestBody:
         content:
           application/json:
@@ -947,7 +1303,7 @@ paths:
         Takes a token and blacklists it. Must be used with the
         `rest_framework_simplejwt.token_blacklist` app installed.
       tags:
-      - api
+      - auth
       requestBody:
         content:
           application/json:
@@ -976,7 +1332,7 @@ paths:
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - api
+      - auth
       requestBody:
         content:
           application/json:
@@ -1010,7 +1366,7 @@ paths:
         * PUT/PATCH /api/v1/courses/{id}/ → update a course
         * DELETE /api/v1/courses/{id}/ → delete a course
       tags:
-      - api
+      - courses
       security:
       - jwtAuth: []
       - BearerAuth: []
@@ -1034,7 +1390,7 @@ paths:
         * PUT/PATCH /api/v1/courses/{id}/ → update a course
         * DELETE /api/v1/courses/{id}/ → delete a course
       tags:
-      - api
+      - courses
       requestBody:
         content:
           application/json:
@@ -1076,7 +1432,7 @@ paths:
         description: A unique value identifying this course.
         required: true
       tags:
-      - api
+      - courses
       security:
       - jwtAuth: []
       - BearerAuth: []
@@ -1105,7 +1461,7 @@ paths:
         description: A unique value identifying this course.
         required: true
       tags:
-      - api
+      - courses
       requestBody:
         content:
           application/json:
@@ -1146,7 +1502,7 @@ paths:
         description: A unique value identifying this course.
         required: true
       tags:
-      - api
+      - courses
       requestBody:
         content:
           application/json:
@@ -1186,7 +1542,7 @@ paths:
         description: A unique value identifying this course.
         required: true
       tags:
-      - api
+      - courses
       security:
       - jwtAuth: []
       - BearerAuth: []
@@ -1244,6 +1600,18 @@ components:
       - date
       - id
       - student_id
+    CorrectChoiceEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      type: integer
+      description: |-
+        * `1` - Choice 1
+        * `2` - Choice 2
+        * `3` - Choice 3
+        * `4` - Choice 4
     Course:
       type: object
       properties:
@@ -1257,9 +1625,8 @@ components:
           type: string
         credit_hours:
           type: integer
-          maximum: 9223372036854775807
+          maximum: 2147483647
           minimum: 0
-          format: int64
         department:
           type: string
         semester:
@@ -1351,9 +1718,8 @@ components:
           type: string
         credit_hours:
           type: integer
-          maximum: 9223372036854775807
+          maximum: 2147483647
           minimum: 0
-          format: int64
         department:
           type: string
         semester:
@@ -1412,6 +1778,29 @@ components:
         is_present:
           type: boolean
           description: true = present, false = absent.
+    PatchedQuizCreateUpdate:
+      type: object
+      description: |-
+        Writable serializer for faculty creating or updating a quiz.
+        Accepts nested questions with correct_choice.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        duration_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Time limit in minutes — enforced server-side.
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionWrite'
     PatchedStudent:
       type: object
       properties:
@@ -1434,6 +1823,189 @@ components:
           type: string
         student_profile:
           $ref: '#/components/schemas/StudentProfile'
+    Question:
+      type: object
+      description: |-
+        Read-only serializer for students.
+        Deliberately excludes `correct_choice` to prevent answer leaking.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          description: Display sequence — lower values appear first.
+        marks:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Points awarded for a correct answer.
+        choice_1:
+          type: string
+          maxLength: 500
+        choice_2:
+          type: string
+          maxLength: 500
+        choice_3:
+          type: string
+          maxLength: 500
+        choice_4:
+          type: string
+          maxLength: 500
+      required:
+      - choice_1
+      - choice_2
+      - choice_3
+      - choice_4
+      - id
+      - text
+    QuestionWrite:
+      type: object
+      description: |-
+        Write serializer used by faculty when creating / updating a quiz.
+        Includes `correct_choice` because only faculty/admin can write.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          description: Display sequence — lower values appear first.
+        marks:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Points awarded for a correct answer.
+        choice_1:
+          type: string
+          maxLength: 500
+        choice_2:
+          type: string
+          maxLength: 500
+        choice_3:
+          type: string
+          maxLength: 500
+        choice_4:
+          type: string
+          maxLength: 500
+        correct_choice:
+          allOf:
+          - $ref: '#/components/schemas/CorrectChoiceEnum'
+          description: |-
+            The number (1-4) of the correct choice.
+
+            * `1` - Choice 1
+            * `2` - Choice 2
+            * `3` - Choice 3
+            * `4` - Choice 4
+          minimum: 0
+          maximum: 2147483647
+      required:
+      - choice_1
+      - choice_2
+      - choice_3
+      - choice_4
+      - correct_choice
+      - id
+      - text
+    QuizCreateUpdate:
+      type: object
+      description: |-
+        Writable serializer for faculty creating or updating a quiz.
+        Accepts nested questions with correct_choice.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        duration_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Time limit in minutes — enforced server-side.
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionWrite'
+      required:
+      - duration_minutes
+      - id
+      - questions
+      - title
+    QuizDetail:
+      type: object
+      description: Full detail — nested questions without correct_choice (student-safe).
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        duration_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Time limit in minutes — enforced server-side.
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+          readOnly: true
+      required:
+      - duration_minutes
+      - id
+      - questions
+      - title
+    QuizList:
+      type: object
+      description: Compact listing — shows question count instead of full nested list.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        duration_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          description: Time limit in minutes — enforced server-side.
+        question_count:
+          type: integer
+          readOnly: true
+      required:
+      - duration_minutes
+      - id
+      - question_count
+      - title
+    QuizSubmit:
+      type: object
+      description: 'Input: the full submission payload — a list of answers.'
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmitAnswer'
+      required:
+      - answers
     Student:
       type: object
       properties:
@@ -1468,9 +2040,8 @@ components:
       properties:
         join_date_year:
           type: integer
-          maximum: 9223372036854775807
+          maximum: 32767
           minimum: 0
-          format: int64
           description: The calendar year the student enrolled, e.g. 2023
         gpa:
           type: string
@@ -1481,6 +2052,19 @@ components:
       required:
       - gpa
       - join_date_year
+    SubmitAnswer:
+      type: object
+      description: 'Input: one answer from a student — question id and chosen option.'
+      properties:
+        question_id:
+          type: integer
+        selected_choice:
+          type: integer
+          maximum: 4
+          minimum: 1
+      required:
+      - question_id
+      - selected_choice
     TokenBlacklist:
       type: object
       properties:
@@ -1557,5 +2141,5 @@ components:
       scheme: bearer
       bearerFormat: JWT
 servers:
-- url: http://127.0.0.1:8000
-  description: Development
+- url: https://campus-hup-api--ahmedarafa20044.replit.app
+  description: Production
