@@ -1,4 +1,6 @@
 from django.core.management.base import BaseCommand
+from django.core.management import call_command
+from django.db.utils import IntegrityError
 from accounts.models import (
     Department,
     User,
@@ -17,12 +19,14 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        is_dev = True
+        is_dev = options.get("dev", False)
         self.seed_department(is_dev=is_dev)
         self.seed_admin()
         if is_dev:
             self.seed_student()
             self.seed_faculty()
+            
+        call_command("seed_courses", dev=is_dev)
 
     def seed_student(self):
 
@@ -35,8 +39,11 @@ class Command(BaseCommand):
             "department_id": "03",
         }
 
-        User.objects.create_student(data)
-        self.print_data(data, "user student")
+        try:
+            User.objects.create_student(data)
+            self.print_data(data, "user student")
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"student already exists or error: {e}"))
 
     def seed_faculty(self):
         data = {
@@ -48,8 +55,11 @@ class Command(BaseCommand):
             "faculty_profile": {},
         }
 
-        User.objects.create_faculty(data)
-        self.print_data(data, "user faculty")
+        try:
+            User.objects.create_faculty(data)
+            self.print_data(data, "user faculty")
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"faculty already exists or error: {e}"))
 
     def seed_admin(self):
         data = {
@@ -60,8 +70,11 @@ class Command(BaseCommand):
             "email": "su@admin.com",
         }
 
-        User.objects.create_superuser(**data)
-        self.print_data(data, "user admin")
+        try:
+            User.objects.create_superuser(**data)
+            self.print_data(data, "user admin")
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"admin already exists or error: {e}"))
 
     def seed_department(self, is_dev):
         data = [
@@ -72,8 +85,11 @@ class Command(BaseCommand):
                 {"name": "cs", "code": "03", "description": "computer science"},
             ]
         for d in data:
-            dept = Department(**d)
-            dept.save()
+            try:
+                dept = Department(**d)
+                dept.save()
+            except Exception as e:
+                self.stdout.write(self.style.WARNING(f"department already exists or error: {e}"))
         self.print_data(data, "department")
 
     def print_data(self, data, model):

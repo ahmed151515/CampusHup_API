@@ -76,6 +76,7 @@ path(
 /api/v1/courses/       → courses app
 /api/v1/auth/          → JWT auth (login, refresh, logout)
 /api/v1/<course_code>/attendance/ → attendances app
+/api/v1/<course_code>/quiz/       → quiz app
 ```
 
 ---
