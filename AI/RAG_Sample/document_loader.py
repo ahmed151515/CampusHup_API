@@ -1,5 +1,4 @@
 import PyPDF2
-import openpyxl
 from pathlib import Path
 from typing import List, Dict, Any
 import re
@@ -23,48 +22,38 @@ class DocumentParser:
             print(f"Error parsing PDF {file_path}: {e}")
         return texts
     
-    @staticmethod
-    def parse_excel(file_path: str) -> List[str]:
-        """Extract data from Excel as structured text"""
-        texts = []
-        try:
-            wb = openpyxl.load_workbook(file_path)
-            for sheet_name in wb.sheetnames:
-                ws = wb[sheet_name]
-                texts.append(f"[Sheet: {sheet_name}]\n")
-                
-                # Get headers
-                headers = []
-                for cell in ws[1]:
-                    headers.append(str(cell.value))
-                
-                if headers:
-                    texts.append("Headers: " + " | ".join(headers) + "\n")
-                
-                # Get data rows
-                for row_idx, row in enumerate(ws.iter_rows(min_row=2, values_only=False), start=2):
-                    row_data = []
-                    for cell in row:
-                        row_data.append(str(cell.value))
-                    texts.append(f"Row {row_idx}: " + " | ".join(row_data))
-        except Exception as e:
-            print(f"Error parsing Excel {file_path}: {e}")
-        return texts
     
     @staticmethod
-    def chunk_text(texts: List[str], chunk_size: int = 512, overlap: int = 50) -> List[str]:
-        """Split texts into overlapping chunks"""
+    def chunk_text(texts: List[str], chunk_size=200, overlap=30) -> List[str]:
         chunks = []
         full_text = "\n".join(texts)
-        
-        # Split by sentences first (rough approximation based on words)
-        words = full_text.split()
-        
-        for i in range(0, len(words), chunk_size - overlap):
-            chunk = " ".join(words[i:i + chunk_size])
-            if chunk.strip():
-                chunks.append(chunk)
-        
+        paragraphs = full_text.split("\n")
+
+        for para in paragraphs:
+            if not para.strip():
+                continue
+                
+            sentences = re.split(r'(?<=[.!?])\s+', para)
+
+            current_chunk = []
+            current_length = 0
+            
+            for sentence in sentences:
+                words = sentence.split()
+
+                if current_length + len(words) > chunk_size:
+                    chunks.append(" ".join(current_chunk))
+
+                    overlap_words = current_chunk[-overlap:] if overlap else []
+                    current_chunk = overlap_words.copy()
+                    current_length = len(current_chunk)
+
+                current_chunk.extend(words)
+                current_length += len(words)
+
+            if current_chunk:
+                chunks.append(" ".join(current_chunk))
+
         return chunks
     
     @staticmethod
@@ -73,8 +62,8 @@ class DocumentParser:
         documents = []
         data_path = Path(data_dir)
         
-        # Process PDF files
-        for pdf_file in data_path.glob("*.pdf"):
+        # Process PDF files (search recursively in all subdirectories)
+        for pdf_file in data_path.glob("**/*.pdf"):
             print(f"Processing PDF: {pdf_file.name}")
             texts = DocumentParser.parse_pdf(str(pdf_file))
             chunks = DocumentParser.chunk_text(texts)
@@ -83,18 +72,6 @@ class DocumentParser:
                     "content": chunk,
                     "source": pdf_file.name,
                     "type": "pdf"
-                })
-        
-        # Process Excel files
-        for excel_file in data_path.glob("*.xlsx"):
-            print(f"Processing Excel: {excel_file.name}")
-            texts = DocumentParser.parse_excel(str(excel_file))
-            chunks = DocumentParser.chunk_text(texts)
-            for chunk in chunks:
-                documents.append({
-                    "content": chunk,
-                    "source": excel_file.name,
-                    "type": "xlsx"
                 })
         
         print(f"Loaded {len(documents)} document chunks")

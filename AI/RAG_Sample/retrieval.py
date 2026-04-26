@@ -36,6 +36,7 @@ class RAGChain:
         for i, doc in enumerate(retrieved_docs, 1):
             context += f"\n[Document {i}] (Source: {doc.get('source', 'Unknown')})\n"
             context += f"{doc['content']}\n"
+            print(context)
         return context
     
     def generate_response(self, query: str, context: str) -> str:
