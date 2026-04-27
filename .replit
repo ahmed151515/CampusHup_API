@@ -1,4 +1,4 @@
-modules = ["go-1.21", "nodejs-20", "python-3.13", "web"]
+modules = ["python-3.12", "go-1.21", "nodejs-20", "web"]
 [agent]
 expertMode = true
 
@@ -35,14 +35,5 @@ externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-
-run = [
-  "sh",
-  "-c",
-  "gunicorn --bind=0.0.0.0:5000 --reuse-port --chdir backend config.wsgi:application",
-]
-build = [
-  "sh",
-  "-c",
-  "cd backend && pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput",
-]
+run = ["bash", "-c", "cd backend && ENV=dev gunicorn --bind=0.0.0.0:5000 config.wsgi:application"]
+build = ["bash", "-c", "cd backend && ENV=dev python manage.py migrate --noinput"]
