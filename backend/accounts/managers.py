@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
     def create_faculty(self, data: dict) -> User:  # noqa: F821
         from .models import FacultyProfile
 
-        profile_data = data.pop("faculty_profile")
+        profile_data = data.pop("faculty_profile", {})
         user_data = data
         with transaction.atomic():
             user = self.create_user(role="faculty", **user_data)

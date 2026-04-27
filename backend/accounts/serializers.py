@@ -84,7 +84,7 @@ class StudentSerializer(UserSerializer):
 
 
 class FacultySerializer(UserSerializer):
-    faculty_profile = FacultyProfileSerializer()
+    faculty_profile = FacultyProfileSerializer(required=False)
 
     class Meta(UserSerializer.Meta):
         model = User

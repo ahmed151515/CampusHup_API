@@ -101,6 +101,17 @@ class CourseListTests(APITestCase):
         response = self.client.get(self.list_url, **auth_header(self.student))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_list_as_student_only_returns_enrolled_courses(self):
+        # Student is not enrolled initially
+        response = self.client.get(self.list_url, **auth_header(self.student))
+        self.assertEqual(len(response.data), 0)
+
+        # Enroll student
+        enroll_student(self.course, self.student)
+        response = self.client.get(self.list_url, **auth_header(self.student))
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["course_code"], self.course.course_code)
+
     def test_list_contains_created_course(self):
         response = self.client.get(self.list_url, **auth_header(self.admin))
         codes = [c["course_code"] for c in get_list_data(response)]
@@ -245,9 +256,14 @@ class CourseRetrieveTests(APITestCase):
         response = self.client.get(self.detail_url, **auth_header(self.admin))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_retrieve_as_student_returns_200(self):
+    def test_retrieve_as_enrolled_student_returns_200(self):
+        enroll_student(self.course, self.student)
         response = self.client.get(self.detail_url, **auth_header(self.student))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_as_unenrolled_student_returns_404(self):
+        response = self.client.get(self.detail_url, **auth_header(self.student))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_retrieve_response_contains_expected_fields(self):
         response = self.client.get(self.detail_url, **auth_header(self.admin))
@@ -587,3 +603,97 @@ class TimetableModelTests(APITestCase):
             tt = self._make_timetable(day)
             self.assertEqual(tt.day_of_week, day)
             tt.delete()
+
+
+# ---------------------------------------------------------------------------
+# CourseActionTests  –  Custom actions for enrollment and faculty
+# ---------------------------------------------------------------------------
+
+
+class CourseActionTests(APITestCase):
+    """Tests for custom actions in CourseViewSet."""
+
+    def setUp(self):
+        self.dept = make_department()
+        self.admin = make_admin()
+        self.faculty_user = make_faculty("DR_TEST_01")
+        self.student_user = make_student("ST_TEST_01")
+        self.course = make_course(self.admin, self.dept, "CS301")
+        
+        self.enroll_url = reverse("v1:course-enroll-student", kwargs={"course_code": "CS301"})
+        self.list_enrollments_url = reverse("v1:course-list-enrollments", kwargs={"course_code": "CS301"})
+        self.assign_faculty_url = reverse("v1:course-assign-faculty", kwargs={"course_code": "CS301"})
+        self.list_faculty_url = reverse("v1:course-list-faculty", kwargs={"course_code": "CS301"})
+
+    # ---- Enrollment Tests ----
+
+    def test_enroll_student_as_admin_returns_201(self):
+        payload = {"student": self.student_user.college_id}
+        response = self.client.post(self.enroll_url, payload, format="json", **auth_header(self.admin))
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(Enrollment.objects.filter(course=self.course, student=self.student_user.student_profile).exists())
+
+    def test_enroll_student_as_student_returns_403(self):
+        payload = {"student": self.student_user.college_id}
+        response = self.client.post(self.enroll_url, payload, format="json", **auth_header(self.student_user))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_list_enrollments_as_admin_returns_200(self):
+        enroll_student(self.course, self.student_user)
+        response = self.client.get(self.list_enrollments_url, **auth_header(self.admin))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["student"], self.student_user.college_id)
+
+    def test_list_enrollments_as_student_returns_403(self):
+        enroll_student(self.course, self.student_user)
+        response = self.client.get(self.list_enrollments_url, **auth_header(self.student_user))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_enroll_student_duplicate_returns_400(self):
+        # Enroll once
+        enroll_student(self.course, self.student_user)
+        
+        # Try to enroll again
+        payload = {"student": self.student_user.college_id}
+        response = self.client.post(self.enroll_url, payload, format="json", **auth_header(self.admin))
+        
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("already enrolled", response.data["detail"])
+
+    # ---- Faculty Assignment Tests ----
+
+    def test_assign_faculty_as_admin_returns_201(self):
+        payload = {"faculty": self.faculty_user.college_id, "role": "lecturer"}
+        response = self.client.post(self.assign_faculty_url, payload, format="json", **auth_header(self.admin))
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(CourseFaculty.objects.filter(course=self.course, faculty=self.faculty_user.faculty_profile).exists())
+
+    def test_assign_faculty_as_faculty_returns_403(self):
+        payload = {"faculty": self.faculty_user.college_id, "role": "lecturer"}
+        response = self.client.post(self.assign_faculty_url, payload, format="json", **auth_header(self.faculty_user))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_list_faculty_as_admin_returns_200(self):
+        assign_faculty(self.course, self.faculty_user)
+        response = self.client.get(self.list_faculty_url, **auth_header(self.admin))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["faculty"], self.faculty_user.college_id)
+
+    def test_list_faculty_as_student_returns_403(self):
+        assign_faculty(self.course, self.faculty_user)
+        response = self.client.get(self.list_faculty_url, **auth_header(self.student_user))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_assign_faculty_duplicate_role_returns_400(self):
+        # Assign first lecturer
+        assign_faculty(self.course, self.faculty_user, role="lecturer")
+        
+        # Try to assign second lecturer
+        faculty2 = make_faculty("DR_TEST_02")
+        payload = {"faculty": faculty2.college_id, "role": "lecturer"}
+        response = self.client.post(self.assign_faculty_url, payload, format="json", **auth_header(self.admin))
+        
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("already assigned", response.data["detail"])

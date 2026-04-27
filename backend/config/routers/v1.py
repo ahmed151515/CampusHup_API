@@ -11,6 +11,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("courses/", include("courses.urls")),
     path("<str:course_code>/attendance/", include("attendances.urls")),
+    path("<str:course_code>/contents/", include("contents.urls")),
     path(
         "auth/login/",
         extend_schema(tags=["auth"])(TokenObtainPairView).as_view(),

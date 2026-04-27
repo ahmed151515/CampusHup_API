@@ -61,7 +61,6 @@ class Enrollment(models.Model):
     ]
     student = models.ForeignKey(
         "accounts.StudentProfile",
-        limit_choices_to={"role": "student"},
         on_delete=models.CASCADE,
         related_name="enrollments",
     )
