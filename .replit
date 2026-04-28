@@ -1,9 +1,9 @@
-modules = ["python-3.12", "go-1.21", "nodejs-20", "web"]
+modules = ["go-1.21", "nodejs-20", "python-3.14", "web"]
 [agent]
 expertMode = true
 
 [nix]
-channel = "stable-25_05"
+channel = "unstable"
 
 [workflows]
 runButton = "Project"
@@ -23,7 +23,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd backend && python manage.py runserver 0.0.0.0:5000"
+args = "cd backend && uv run python manage.py runserver 0.0.0.0:5000"
 waitForPort = 5000
 
 [workflows.workflow.metadata]
@@ -35,5 +35,13 @@ externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["bash", "-c", "cd backend && ENV=dev gunicorn --bind=0.0.0.0:5000 config.wsgi:application"]
-build = ["bash", "-c", "cd backend && ENV=dev python manage.py migrate --noinput"]
+run = [
+  "bash",
+  "-c",
+  "cd backend && ENV=dev uv run gunicorn --bind=0.0.0.0:5000 config.wsgi:application",
+]
+build = [
+  "bash",
+  "-c",
+  "cd backend && ENV=dev uv run python manage.py migrate --noinput",
+]
