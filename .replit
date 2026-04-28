@@ -38,10 +38,10 @@ deploymentTarget = "autoscale"
 run = [
   "bash",
   "-c",
-  "cd backend && ENV=dev uv run gunicorn --bind=0.0.0.0:5000 config.wsgi:application",
+  "cd backend &&  uv run gunicorn --bind=0.0.0.0:5000 config.wsgi:application",
 ]
 build = [
   "bash",
   "-c",
-  "cd backend && ENV=dev uv run python manage.py migrate --noinput",
+  "cd backend && uv pip install -r requirements.txt  && uv run python manage.py migrate --noinput",
 ]
