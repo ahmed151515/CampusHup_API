@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "attendances",
     "contents",
     "quiz",
+    "assignments",
 ]
 
 MIDDLEWARE = [
