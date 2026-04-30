@@ -6,13 +6,13 @@ from django.utils import timezone
 
 
 def assignment_upload_path(instance, filename: str) -> str:
-    """Store assignment files under  assignments/<course_code>/<filename>."""
-    return f"assignments/{instance.course_id}/{filename}"
+    """Store assignment files under  sheets/<course_code>/<filename>."""
+    return f"sheets/{instance.course_id}/{filename}"
 
 
 def submission_upload_path(instance, filename: str) -> str:
-    """Store submission files under  submissions/<course_code>/<assignment_id>/<filename>."""
-    return f"submissions/{instance.assignment.course_id}/{instance.assignment_id}/{filename}"
+    """Store submission files under  sheets/submissions/<course_code>/<assignment_id>/<filename>."""
+    return f"sheets/submissions/{instance.assignment.course_id}/{instance.assignment_id}/{filename}"
 
 
 class Assignment(models.Model):

@@ -32,7 +32,13 @@ var/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+
+# Local media / uploads (dev file storage — never commit uploaded files)
 media/
+sheets/
+thumbnails/
+materials/
+submissions/
 
 # Environment variables
 .env
