@@ -4,7 +4,7 @@ from google import genai
 
 load_dotenv()
 
-def Chat_bot(first_request):
+def chat_bot(first_request):
     api_key = os.getenv("GEMINI_API_KEY")
 
     client = genai.Client(api_key=api_key)
@@ -59,4 +59,6 @@ def Chat_bot(first_request):
             current_request = input("\nEnter your next question: ")
 
 
-Chat_bot(input("Enter your first question: "))
+# use the below line to test the chat bot:
+
+# chat_bot(input("Enter your first question: "))

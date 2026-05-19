@@ -1,0 +1,53 @@
+Computer Science Curriculum
+
+Introduction to Programming
+- No prerequisites
+- Teaches basic programming concepts using Python
+
+Object-Oriented Programming
+- Prerequisite: Introduction to Programming
+- Teaches classes, objects, inheritance, and polymorphism
+
+Data Structures
+- Prerequisite: Object-Oriented Programming
+- Topics: arrays, linked lists, stacks, queues, trees, graphs
+
+Algorithms
+- Prerequisite: Data Structures
+- Topics: sorting, searching, dynamic programming, greedy algorithms
+
+Discrete Mathematics
+- No prerequisites
+- Topics: logic, sets, combinatorics, graph theory
+
+Computer Organization
+- Prerequisite: Introduction to Programming
+- Topics: CPU architecture, memory hierarchy, assembly basics
+
+Operating Systems
+- Prerequisites: Data Structures, Computer Organization
+- Topics: processes, threads, scheduling, memory management
+
+Databases
+- Prerequisite: Data Structures
+- Topics: relational databases, SQL, normalization, indexing
+
+Computer Networks
+- Prerequisite: Operating Systems
+- Topics: TCP/IP, routing, switching, network protocols
+
+Software Engineering
+- Prerequisite: Data Structures
+- Topics: software development lifecycle, design patterns, testing
+
+Artificial Intelligence
+- Prerequisites: Algorithms, Discrete Mathematics
+- Topics: search algorithms, knowledge representation, machine learning basics
+
+Machine Learning
+- Prerequisites: Artificial Intelligence, Linear Algebra, Probability
+- Topics: regression, classification, neural networks
+
+Computer Security
+- Prerequisites: Operating Systems, Computer Networks
+- Topics: cryptography, authentication, vulnerabilities, secure protocols
